@@ -36,18 +36,26 @@ namespace RedBlackTree
 
         private Node BinarySearchTreeInsertion(Node node, float value)
         {
-            if(node.IsNull)
+            var isNewNodeIsRight = value > node.Value;
+
+            var targetNode = isNewNodeIsRight ? node.RightChild : node.LeftChild;
+
+            if(targetNode.IsNull)
             {
-                node = new Node(value);
-                return node;
+                targetNode = new Node(value);
+                targetNode.SetParent(node);
+
+                if (isNewNodeIsRight)
+                    node.SetRightChild(targetNode);
+                else
+                    node.SetLeftChild(targetNode);
+
+                return targetNode;
             }
 
-            if (value > node.Value)
-                node.SetRightChild(BinarySearchTreeInsertion(node.RightChild, value));
-            else
-                node.SetLeftChild(BinarySearchTreeInsertion(node.LeftChild, value));
+            BinarySearchTreeInsertion(targetNode, value);
 
-            return node;
+            return targetNode;
         }
 
         public void Delete(float value)
@@ -65,7 +73,7 @@ namespace RedBlackTree
                 return;
 
             PrintNode(node.LeftChild);
-            Console.WriteLine($"{node.Value}");
+            node.Print();
             PrintNode(node.RightChild);
         }
     }

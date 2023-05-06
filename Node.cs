@@ -50,6 +50,25 @@ namespace RedBlackTree
                 throw new ArgumentException("Node that you're trying to insert as RIGHT has lower value, than current node");
 
             RightChild = node;
-        }        
+        }
+
+
+        #region [Printing]
+        public override string ToString() => $"{Value}";
+
+        public virtual void Print()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write($"{Value} ");
+
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write($"(Color - {Color} | ");
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write($"Parent -  {Parent})\n");
+
+            Console.ResetColor();
+        } 
+        #endregion
     }
 }

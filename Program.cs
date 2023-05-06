@@ -11,6 +11,8 @@ namespace RedBlackTree
             tree.Insert(5);
             tree.Insert(20);
             tree.Insert(15);
+            tree.Insert(13);
+            tree.Insert(1);
 
             tree.PrintTree();
 
