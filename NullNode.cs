@@ -1,11 +1,13 @@
 ﻿
 namespace RedBlackTree.Nullables
 {
-    class NullRedBlackTree : RedBlackTree
+    class NullNode : Node
     {
         public override bool IsNull => true;
 
 
-        public NullRedBlackTree() : base(float.NaN) { }
+        public NullNode() : base(float.NaN) 
+        { 
+        }
     }
 }

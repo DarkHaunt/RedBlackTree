@@ -1,27 +1,17 @@
-﻿using RedBlackTree.Nullables;
+﻿using System;
 
 
 namespace RedBlackTree
 {
-    class RedBlackTree : INullable
+    class RedBlackTree
     {
-        private readonly float _value;
-
-        private Color _color;
-        private RedBlackTree _leftChild;
-        private RedBlackTree _rightChild;
-
-
-        public virtual bool IsNull => false;
+        private Node _root;
 
 
         public RedBlackTree(float value)
         {
-            _value = value;
-            _color = Color.Red;
-
-            _leftChild = NullableContainer.NullRedTree;
-            _rightChild = NullableContainer.NullRedTree;
+            _root = new Node(value);
+            _root.SetColor(Color.Black);
         }
 
 
@@ -32,12 +22,51 @@ namespace RedBlackTree
 
         public void Insert(float value)
         {
+            if (_root.IsNull) // TODO: Make sure that deleting node will replace node with null-able node
+            {
+                _root = new Node(value);
+                return;
+            }
 
+            var node = BinarySearchTreeInsertion(_root, value);
+
+            if (node == _root)
+                node.SetColor(Color.Black);
+        }
+
+        private Node BinarySearchTreeInsertion(Node node, float value)
+        {
+            if(node.IsNull)
+            {
+                node = new Node(value);
+                return node;
+            }
+
+            if (value > node.Value)
+                node.SetRightChild(BinarySearchTreeInsertion(node.RightChild, value));
+            else
+                node.SetLeftChild(BinarySearchTreeInsertion(node.LeftChild, value));
+
+            return node;
         }
 
         public void Delete(float value)
         {
+        }
 
+        public void PrintTree()
+        {
+            PrintNode(_root);
+        }
+
+        private void PrintNode(Node node)
+        {
+            if (node.IsNull)
+                return;
+
+            PrintNode(node.LeftChild);
+            Console.WriteLine($"{node.Value}");
+            PrintNode(node.RightChild);
         }
     }
 
@@ -47,3 +76,4 @@ namespace RedBlackTree
         Red = 1
     }
 }
+
