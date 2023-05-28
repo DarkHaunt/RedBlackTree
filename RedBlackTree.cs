@@ -14,15 +14,15 @@ namespace RedBlackTree
         public RedBlackTree(float value)
         {
             _rotator = new NodeRotator();
-            
+
             CreateRootNode(value);
         }
 
         public RedBlackTree()
         {
             _rotator = new NodeRotator();
-            
-            _root = NullableContainer.NullNode; 
+
+            _root = NullableContainer.NullNode;
         }
 
 
@@ -33,23 +33,35 @@ namespace RedBlackTree
             if (parent.Color == Color.Black || node == _root)
                 return;
 
+            var grandparent = node.GetGrandparent();
             var uncle = node.GetUncle();
 
             switch (uncle.Color)
             {
                 case Color.Red:
-                    uncle.SetColor(Color.Black);
-                    parent.SetColor(Color.Black);
-
-                    var grandparent = node.GetGrandparent();
+                    HandleRedRedConflict();
                     Balance(grandparent);
-
                     break;
                 case Color.Black:
-                    _rotator.Rotate(node);
+                    HandleBlackInsertConflict();
                     break;
                 default:
                     throw new ApplicationException("In black-red tree can't be more than Black / Red colors");
+            }
+
+            void HandleRedRedConflict()
+            {
+                uncle.SetColor(Color.Black);
+                parent.SetColor(Color.Black);
+                grandparent.SetColor(Color.Red);
+            }
+
+            void HandleBlackInsertConflict()
+            {
+                var localRoot = _rotator.RotateLocalTree(node);
+
+                if (grandparent == _root)
+                    _root = localRoot;
             }
         }
 
@@ -78,7 +90,7 @@ namespace RedBlackTree
 
             var targetNode = isNewNodeIsRight ? node.RightChild : node.LeftChild;
 
-            if(targetNode.IsNull)
+            if (targetNode.IsNull)
             {
                 targetNode = new Node(value);
                 targetNode.SetParent(node);
@@ -94,7 +106,8 @@ namespace RedBlackTree
             return BST_Insertion(targetNode, value);
         }
 
-        #region [Printing] 
+        #region [Printing]
+
         public void PrintTree()
         {
             PrintNode(_root);
@@ -109,6 +122,7 @@ namespace RedBlackTree
             node.Print();
             PrintNode(node.RightChild);
         }
+
         #endregion
     }
 
@@ -118,4 +132,3 @@ namespace RedBlackTree
         Red = 1
     }
 }
-

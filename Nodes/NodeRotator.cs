@@ -1,6 +1,4 @@
-﻿using RedBlackTree.Nullables;
-
-namespace RedBlackTree.Nodes
+﻿namespace RedBlackTree.Nodes
 {
     public class NodeRotator
     {
@@ -9,31 +7,38 @@ namespace RedBlackTree.Nodes
         }
 
 
-        public void Rotate(Node node)
+        public Node RotateLocalTree(Node node)
         {
-            var grandparent = node.GetGrandparent();
             var parent = node.Parent;
+            var grandparent = node.GetGrandparent();
+            var previousGrandparentParent = grandparent.Parent;
+
+            grandparent.SwapColor();
 
             if (grandparent.LeftChild == node.Parent)
             {
                 if (parent.RightChild == node)
-                    LeftRightRotationParent(node);
+                    parent = LeftRightRotationParent(node, grandparent);
 
-                LeftRotation(grandparent);
+                grandparent = LeftRotation(grandparent);
+                previousGrandparentParent.SetLeftChild(grandparent);
             }
             else
             {
                 if (parent.LeftChild == node)
-                    RightLeftRotationParent(node);
+                    parent = RightLeftRotationParent(node, grandparent);
 
-                RightRotation(grandparent);
+                grandparent = RightRotation(grandparent);
+                previousGrandparentParent.SetRightChild(grandparent); // TODO: To make  null nude ignore child setting and other operations
             }
 
-            grandparent.SwapColor();
+            grandparent.SetParent(previousGrandparentParent);
             parent.SwapColor();
+
+            return grandparent;
         }
 
-        private void LeftRotation(Node node)
+        private Node LeftRotation(Node node)
         {
             var leftChildOfGrandparent = node.LeftChild;
             var rightChildOfGrandparentLeftChild = leftChildOfGrandparent.RightChild;
@@ -45,9 +50,11 @@ namespace RedBlackTree.Nodes
 
             if (!rightChildOfGrandparentLeftChild.IsNull)
                 rightChildOfGrandparentLeftChild.SetParent(node);
+
+            return leftChildOfGrandparent;
         }
 
-        private void RightRotation(Node node)
+        private Node RightRotation(Node node)
         {
             var rightChildOfGrandparent = node.RightChild;
             var leftChildOfGrandparentRightChild = rightChildOfGrandparent.LeftChild;
@@ -59,32 +66,39 @@ namespace RedBlackTree.Nodes
 
             if (!leftChildOfGrandparentRightChild.IsNull)
                 leftChildOfGrandparentRightChild.SetParent(node);
+
+            return rightChildOfGrandparent;
         }
 
-        private void RightLeftRotationParent(Node node)
+        private Node RightLeftRotationParent(Node node, Node grandparent)
         {
-            var grandparent = node.GetGrandparent();
             var rightChild = node.RightChild;
             var parent = node.Parent;
 
             grandparent.SetRightChild(node);
-            parent.SetLeftChild(rightChild);
             node.SetParent(grandparent);
             node.SetRightChild(parent);
+
+            parent.SetLeftChild(rightChild);
             parent.SetParent(node);
+
+            return node;
         }
 
-        private void LeftRightRotationParent(Node node)
+        private Node LeftRightRotationParent(Node node, Node grandparent)
         {
-            var grandparent = node.GetGrandparent();
+            var grand = node.GetGrandparent();
             var leftChild = node.LeftChild;
             var parent = node.Parent;
 
-            grandparent.SetRightChild(node);
-            parent.SetRightChild(leftChild);
+            grand.SetLeftChild(node);
             node.SetParent(grandparent);
             node.SetLeftChild(parent);
+
+            parent.SetRightChild(leftChild);
             parent.SetParent(node);
+
+            return node;
         }
     }
 }

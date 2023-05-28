@@ -67,10 +67,8 @@ namespace RedBlackTree.Nodes
 
         public Node GetUncle()
         {
-            if (Parent.IsNull)
-                throw new ArgumentException($"Node {this} have null-parent, so it have not an uncle");
-
-            var uncle = (Parent.LeftChild == this) ? Parent.RightChild : Parent.LeftChild;
+            var grandparent = GetGrandparent();
+            var uncle = grandparent.LeftChild == Parent ? grandparent.RightChild : grandparent.LeftChild;
 
             return uncle;
         }
