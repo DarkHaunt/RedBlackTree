@@ -53,7 +53,9 @@ namespace RedBlackTree
             {
                 uncle.SetColor(Color.Black);
                 parent.SetColor(Color.Black);
-                grandparent.SetColor(Color.Red);
+
+                if (grandparent != _root)
+                    grandparent.SetColor(Color.Red);
             }
 
             void HandleBlackInsertConflict()
