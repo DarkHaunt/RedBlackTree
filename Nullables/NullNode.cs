@@ -1,9 +1,10 @@
-﻿using System;
+﻿using RedBlackTree.Nodes;
+using System;
 
 
 namespace RedBlackTree.Nullables
 {
-    class NullNode : Node
+    public class NullNode : Node
     {
         public override bool IsNull => true;
 

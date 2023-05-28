@@ -1,40 +1,78 @@
-﻿using System;
+﻿using RedBlackTree.Nullables;
+using RedBlackTree.Nodes;
+using System;
 
 
 namespace RedBlackTree
 {
-    class RedBlackTree
+    public class RedBlackTree
     {
+        private readonly NodeRotator _rotator;
         private Node _root;
 
 
         public RedBlackTree(float value)
         {
-            _root = new Node(value);
-            _root.SetColor(Color.Black);
+            _rotator = new NodeRotator();
+            
+            CreateRootNode(value);
+        }
+
+        public RedBlackTree()
+        {
+            _rotator = new NodeRotator();
+            
+            _root = NullableContainer.NullNode; 
         }
 
 
-        public void Balance()
+        private void Balance(Node node)
         {
+            var parent = node.Parent;
 
+            if (parent.Color == Color.Black || node == _root)
+                return;
+
+            var uncle = node.GetUncle();
+
+            switch (uncle.Color)
+            {
+                case Color.Red:
+                    uncle.SetColor(Color.Black);
+                    parent.SetColor(Color.Black);
+
+                    var grandparent = node.GetGrandparent();
+                    Balance(grandparent);
+
+                    break;
+                case Color.Black:
+                    _rotator.Rotate(node);
+                    break;
+                default:
+                    throw new ApplicationException("In black-red tree can't be more than Black / Red colors");
+            }
         }
 
         public void Insert(float value)
         {
             if (_root.IsNull) // TODO: Make sure that deleting node will replace node with null-able node
             {
-                _root = new Node(value);
+                CreateRootNode(value);
                 return;
             }
 
-            var node = BinarySearchTreeInsertion(_root, value);
+            var insertedNode = BST_Insertion(_root, value);
 
-            if (node == _root)
-                node.SetColor(Color.Black);
+            Balance(insertedNode);
         }
 
-        private Node BinarySearchTreeInsertion(Node node, float value)
+        private void CreateRootNode(float value)
+        {
+            _root = new Node(value);
+            _root.SetColor(Color.Black);
+        }
+
+        private Node BST_Insertion(Node node, float value)
         {
             var isNewNodeIsRight = value > node.Value;
 
@@ -53,15 +91,10 @@ namespace RedBlackTree
                 return targetNode;
             }
 
-            BinarySearchTreeInsertion(targetNode, value);
-
-            return targetNode;
+            return BST_Insertion(targetNode, value);
         }
 
-        public void Delete(float value)
-        {
-        }
-
+        #region [Printing] 
         public void PrintTree()
         {
             PrintNode(_root);
@@ -76,6 +109,7 @@ namespace RedBlackTree
             node.Print();
             PrintNode(node.RightChild);
         }
+        #endregion
     }
 
     public enum Color

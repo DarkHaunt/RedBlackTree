@@ -2,7 +2,7 @@
 
 namespace RedBlackTree.Nullables
 {
-    interface INullable
+    public interface INullable
     {
         bool IsNull { get; }
     }
