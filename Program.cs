@@ -19,6 +19,8 @@ namespace RedBlackTree
             tree.Insert(1f);
             tree.Insert(7f);
             tree.Insert(11f);
+            
+            //tree.Insert(3f); // TODO: Check for same number insertion
 
             tree.PrintTree();
 

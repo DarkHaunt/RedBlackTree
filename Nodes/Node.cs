@@ -3,23 +3,41 @@ using System;
 
 namespace RedBlackTree.Nodes
 {
-    public class Node : INullable
+    public class Node : INode
     {
-        public virtual bool IsNull => false;
+        public bool IsNull => false;
         public float Value { get; }
         public Color Color { get; private set; }
-        public Node Parent { get; private set; } 
-        public Node RightChild { get; private set; }
-        public Node LeftChild { get; private set; }
+        public INode Parent { get; private set; }
+        public INode RightChild { get; private set; }
+        public INode LeftChild { get; private set; }
+
+        public INode Uncle
+        {
+            get
+            {
+                var grandparent = Grandparent;
+                var uncle = grandparent.LeftChild == Parent ? grandparent.RightChild : grandparent.LeftChild;
+
+                return uncle;
+            }
+        }
+
+        public INode Grandparent
+        {
+            get
+            {
+                if (Parent.IsNull)
+                    throw new ArgumentException($"Node {this} have null-parent, so it have not a grandparent");
+
+                return Parent.Parent;
+            }
+        }
 
 
         public Node(float value)
         {
             Value = value;
-
-            if (IsNull)
-                return;
-
             Color = Color.Red;
             LeftChild = Parent = RightChild = NullableContainer.NullNode;
         }
@@ -29,13 +47,18 @@ namespace RedBlackTree.Nodes
         {
             Color = color;
         }
+        
+        public void SwapColor()
+        {
+            Color = (Color == Color.Black) ? Color.Red : Color.Black;
+        }
 
-        public void SetParent(Node node)
+        public void SetParent(INode node)
         {
             Parent = node;
         }
 
-        public void SetLeftChild(Node node)
+        public void SetLeftChild(INode node)
         {
             if (node.Value > Value)
                 throw new ArgumentException("Node that you're trying to insert as LEFT has bigger value, than current node");
@@ -43,7 +66,7 @@ namespace RedBlackTree.Nodes
             LeftChild = node;
         }
 
-        public void SetRightChild(Node node)
+        public void SetRightChild(INode node)
         {
             if (node.Value <= Value)
                 throw new ArgumentException("Node that you're trying to insert as RIGHT has lower value, than current node");
@@ -51,33 +74,11 @@ namespace RedBlackTree.Nodes
             RightChild = node;
         }
 
-        public void SwapColor()
-        {
-            Color = (Color == Color.Black) ? Color.Red : Color.Black;
-        }
-
-
-        public Node GetGrandparent()
-        {
-            if (Parent.IsNull)
-                throw new ArgumentException($"Node {this} have null-parent, so it have not a grandparent");
-
-            return Parent.Parent;
-        }
-
-        public Node GetUncle()
-        {
-            var grandparent = GetGrandparent();
-            var uncle = grandparent.LeftChild == Parent ? grandparent.RightChild : grandparent.LeftChild;
-
-            return uncle;
-        }
-
 
         #region [Printing]
         public override string ToString() => $"{Value}";
 
-        public virtual void Print()
+        public void Print()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write($"{Value} ");

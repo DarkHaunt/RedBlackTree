@@ -4,19 +4,42 @@ using System;
 
 namespace RedBlackTree.Nullables
 {
-    public class NullNode : Node
+    public class NullNode : INode
     {
-        public override bool IsNull => true;
+        public Color Color => Color.Black;
+        public float Value => float.NaN;
+        public bool IsNull => true;
+        
+        public INode Grandparent => throw NullNodeException.Create();
+        public INode RightChild => throw NullNodeException.Create();
+        public INode LeftChild => throw NullNodeException.Create();
+        public INode Parent => throw NullNodeException.Create();
+        public INode Uncle => throw NullNodeException.Create();
 
-
-        public NullNode() : base(float.NaN) 
+        public NullNode()
         { 
         }
+        
+        
+        public void SetColor(Color color)
+            => throw NullNodeException.Create();
+        
+        public void SwapColor()
+            => throw NullNodeException.Create();
 
+        public void SetParent(INode node)
+            => throw NullNodeException.Create();
+
+        public void SetLeftChild(INode node)
+            => throw NullNodeException.Create();
+
+        public void SetRightChild(INode node)
+            => throw NullNodeException.Create();
+     
 
         public override string ToString() => "Null Node";
 
-        public override void Print()
+        public void Print()
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Null Node");

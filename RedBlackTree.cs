@@ -1,5 +1,4 @@
-﻿using RedBlackTree.Nullables;
-using RedBlackTree.Nodes;
+﻿using RedBlackTree.Nodes;
 using System;
 
 
@@ -8,7 +7,7 @@ namespace RedBlackTree
     public class RedBlackTree
     {
         private readonly NodeRotator _rotator;
-        private Node _root;
+        private INode _root;
 
 
         public RedBlackTree(float value)
@@ -18,23 +17,51 @@ namespace RedBlackTree
             CreateRootNode(value);
         }
 
-        public RedBlackTree()
+        
+        public void Insert(float value)
         {
-            _rotator = new NodeRotator();
+            if (_root.IsNull) // TODO: Make sure that deleting node will replace node with null-able node
+            {
+                CreateRootNode(value);
+                return;
+            }
 
-            _root = NullableContainer.NullNode;
+            var insertedNode = BST_Insertion(_root, value);
+
+            Balance(insertedNode);
+            
+            INode BST_Insertion(INode node, float currentValue)
+            {
+                var isNewNodeIsRight = currentValue > node.Value;
+
+                var targetNode = isNewNodeIsRight ? node.RightChild : node.LeftChild;
+
+                if (targetNode.IsNull)
+                {
+                    targetNode = new Node(currentValue);
+                    targetNode.SetParent(node);
+
+                    if (isNewNodeIsRight)
+                        node.SetRightChild(targetNode);
+                    else
+                        node.SetLeftChild(targetNode);
+
+                    return targetNode;
+                }
+
+                return BST_Insertion(targetNode, currentValue);
+            }
         }
 
-
-        private void Balance(Node node)
+        private void Balance(INode node)
         {
             var parent = node.Parent;
 
             if (parent.Color == Color.Black || node == _root)
                 return;
 
-            var grandparent = node.GetGrandparent();
-            var uncle = node.GetUncle();
+            var grandparent = node.Grandparent;
+            var uncle = node.Uncle;
 
             switch (uncle.Color)
             {
@@ -67,45 +94,10 @@ namespace RedBlackTree
             }
         }
 
-        public void Insert(float value)
-        {
-            if (_root.IsNull) // TODO: Make sure that deleting node will replace node with null-able node
-            {
-                CreateRootNode(value);
-                return;
-            }
-
-            var insertedNode = BST_Insertion(_root, value);
-
-            Balance(insertedNode);
-        }
-
         private void CreateRootNode(float value)
         {
             _root = new Node(value);
             _root.SetColor(Color.Black);
-        }
-
-        private Node BST_Insertion(Node node, float value)
-        {
-            var isNewNodeIsRight = value > node.Value;
-
-            var targetNode = isNewNodeIsRight ? node.RightChild : node.LeftChild;
-
-            if (targetNode.IsNull)
-            {
-                targetNode = new Node(value);
-                targetNode.SetParent(node);
-
-                if (isNewNodeIsRight)
-                    node.SetRightChild(targetNode);
-                else
-                    node.SetLeftChild(targetNode);
-
-                return targetNode;
-            }
-
-            return BST_Insertion(targetNode, value);
         }
 
         #region [Printing]
@@ -115,7 +107,7 @@ namespace RedBlackTree
             PrintNode(_root);
         }
 
-        private void PrintNode(Node node)
+        private void PrintNode(INode node)
         {
             if (node.IsNull)
                 return;
