@@ -17,7 +17,7 @@ namespace RedBlackTree
             CreateRootNode(value);
         }
 
-        
+
         public void Insert(float value)
         {
             if (_root.IsNull) // TODO: Make sure that deleting node will replace node with null-able node
@@ -26,48 +26,47 @@ namespace RedBlackTree
                 return;
             }
 
-            var insertedNode = BST_Insertion(_root, value);
-
-            Balance(insertedNode);
-            
-            INode BST_Insertion(INode node, float currentValue)
-            {
-                var isNewNodeIsRight = currentValue > node.Value;
-
-                var targetNode = isNewNodeIsRight ? node.RightChild : node.LeftChild;
-
-                if (targetNode.IsNull)
-                {
-                    targetNode = new Node(currentValue);
-                    targetNode.SetParent(node);
-
-                    if (isNewNodeIsRight)
-                        node.SetRightChild(targetNode);
-                    else
-                        node.SetLeftChild(targetNode);
-
-                    return targetNode;
-                }
-
-                return BST_Insertion(targetNode, currentValue);
-            }
+            TryToInsertValueInto(_root, value);
         }
 
-        private void Balance(INode node)
+        private void TryToInsertValueInto(INode root, float currentValue)
         {
-            var parent = node.Parent;
+            var isNewNodeIsRight = currentValue > root.Value;
+            var targetNode = isNewNodeIsRight ? root.RightChild : root.LeftChild;
 
-            if (parent.Color == Color.Black || node == _root)
+            if (targetNode.IsNull)
+            {
+                targetNode = new Node(currentValue);
+                targetNode.SetParent(root);
+
+                if (isNewNodeIsRight)
+                    root.SetRightChild(targetNode);
+                else
+                    root.SetLeftChild(targetNode);
+
+                BalanceAfterInsertion(targetNode);
+            }
+
+            if (targetNode.Value == currentValue)
                 return;
 
-            var grandparent = node.Grandparent;
-            var uncle = node.Uncle;
+            TryToInsertValueInto(targetNode, currentValue);
+        }
+
+        private void BalanceAfterInsertion(INode insertedNode)
+        {
+            var parent = insertedNode.Parent;
+
+            if (parent.Color == Color.Black || insertedNode == _root)
+                return;
+
+            var grandparent = insertedNode.Grandparent;
+            var uncle = insertedNode.Uncle;
 
             switch (uncle.Color)
             {
                 case Color.Red:
                     HandleRedRedConflict();
-                    Balance(grandparent);
                     break;
                 case Color.Black:
                     HandleBlackInsertConflict();
@@ -83,11 +82,13 @@ namespace RedBlackTree
 
                 if (grandparent != _root)
                     grandparent.SetColor(Color.Red);
+
+                BalanceAfterInsertion(grandparent);
             }
 
             void HandleBlackInsertConflict()
             {
-                var localRoot = _rotator.RotateLocalTree(node);
+                var localRoot = _rotator.RotateLocalTree(insertedNode);
 
                 if (grandparent == _root)
                     _root = localRoot;

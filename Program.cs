@@ -9,18 +9,11 @@ namespace RedBlackTree
             var tree = new RedBlackTree(5f);
 
             tree.Insert(20f);
-            tree.Insert(15f);
             tree.Insert(3f);
-            tree.Insert(2f);
-            
-            tree.Insert(4f);
-            tree.Insert(30);
-            
-            tree.Insert(1f);
-            tree.Insert(7f);
-            tree.Insert(11f);
-            
-            //tree.Insert(3f); // TODO: Check for same number insertion
+            tree.Insert(9f);
+           tree.Insert(8f);
+           tree.Insert(7f);
+           tree.Insert(6f);
 
             tree.PrintTree();
 

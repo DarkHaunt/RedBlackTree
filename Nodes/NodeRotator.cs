@@ -21,9 +21,6 @@
                     parent = LeftRightRotationParent(node, grandparent);
 
                 grandparent = LeftRotation(grandparent);
-                
-                if(!previousGrandparentParent.IsNull)
-                    previousGrandparentParent.SetLeftChild(grandparent);
             }
             else
             {
@@ -31,9 +28,14 @@
                     parent = RightLeftRotationParent(node, grandparent);
 
                 grandparent = RightRotation(grandparent);
-                
-                if(!previousGrandparentParent.IsNull)
+            }
+
+            if (!previousGrandparentParent.IsNull)
+            {
+                if (grandparent.Value > previousGrandparentParent.Value)
                     previousGrandparentParent.SetRightChild(grandparent);
+                else
+                    previousGrandparentParent.SetLeftChild(grandparent);
             }
 
             grandparent.SetParent(previousGrandparentParent);
@@ -92,7 +94,7 @@
         private INode LeftRightRotationParent(INode node, INode grandparent)
         {
             var leftChild = node.LeftChild;
-            var grand = node.Grandparent; 
+            var grand = node.Grandparent;
             var parent = node.Parent;
 
             grand.SetLeftChild(node);
