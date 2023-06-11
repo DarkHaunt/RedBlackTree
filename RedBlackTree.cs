@@ -95,6 +95,21 @@ namespace RedBlackTree
             }
         }
 
+        public INode Find(float value)
+        {
+            return FindValue(_root);
+
+            INode FindValue(INode node)
+            {
+                if (node.Value == value) // TODO: Write properly float comparer or get from internet
+                    return node;
+
+                var nextNode = value > node.Value ? node.RightChild : node.LeftChild;
+
+                return nextNode.IsNull ? nextNode : FindValue(nextNode);
+            }
+        }
+
         private void CreateRootNode(float value)
         {
             _root = new Node(value);

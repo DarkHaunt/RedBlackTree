@@ -8,7 +8,6 @@ namespace RedBlackTree.Nullables
         {
         }
 
-        public static NullNodeException Create()
-            => new NullNodeException("This node is null-type!");
+        public static NullNodeException Create() => new("This node is null-type!");
     }
 }
