@@ -2,9 +2,7 @@
 {
     public class NodeRotator
     {
-        public NodeRotator()
-        {
-        }
+        public NodeRotator() {}
 
 
         public INode RotateLocalTree(INode node)

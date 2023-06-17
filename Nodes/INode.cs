@@ -15,6 +15,7 @@
 
         void SetColor(Color color);
         void SetParent(INode node);
+        INode GetInorderSucessor();
         void SetLeftChild(INode node);
         void SetRightChild(INode node);
         void SwapColor();

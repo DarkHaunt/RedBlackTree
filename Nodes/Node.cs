@@ -43,14 +43,38 @@ namespace RedBlackTree.Nodes
         }
 
 
+        public void SwapColor()
+        {
+            Color = (Color == Color.Black) ? Color.Red : Color.Black;
+        }
+
         public void SetColor(Color color)
         {
             Color = color;
         }
-        
-        public void SwapColor()
+
+        public INode GetInorderSucessor()
         {
-            Color = (Color == Color.Black) ? Color.Red : Color.Black;
+            if (!RightChild.IsNull)
+            {
+                var sucessor = RightChild;
+
+                while (!sucessor.LeftChild.IsNull)
+                    sucessor = sucessor.LeftChild;
+
+                return sucessor;
+            }
+
+            var parent = Parent;
+            INode temp = this;
+
+            while (!parent.IsNull && parent.RightChild == temp) // TODO: Make a method in INode for right \ left child
+            {
+                temp = parent;
+                parent = parent.Parent;
+            }
+
+            return parent;
         }
 
         public void SetParent(INode node)
@@ -99,21 +123,21 @@ namespace RedBlackTree.Nodes
 
         private bool Equals(Node other)
         {
-            return Value.Equals(other.Value) && 
-                   Color == other.Color && 
-                   Equals(Parent, other.Parent) && 
-                   Equals(RightChild, other.RightChild) && 
+            return Value.Equals(other.Value) &&
+                   Color == other.Color &&
+                   Equals(Parent, other.Parent) &&
+                   Equals(RightChild, other.RightChild) &&
                    Equals(LeftChild, other.LeftChild);
         }
-        
+
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) 
+            if (ReferenceEquals(null, obj))
                 return false;
-            
-            if (ReferenceEquals(this, obj)) 
+
+            if (ReferenceEquals(this, obj))
                 return true;
-            
+
             return obj.GetType() == GetType() && Equals((Node)obj);
         }
 

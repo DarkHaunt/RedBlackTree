@@ -16,11 +16,13 @@ namespace RedBlackTree.Nullables
         public INode Parent => throw NullNodeException.Create();
         public INode Uncle => throw NullNodeException.Create();
 
-        public NullNode()
-        { 
-        }
-        
-        
+
+        public NullNode() {}
+
+
+        public INode GetInorderSucessor()
+            => throw NullNodeException.Create();
+
         public void SetColor(Color color)
             => throw NullNodeException.Create();
         

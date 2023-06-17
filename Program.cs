@@ -14,8 +14,12 @@ namespace RedBlackTree
             tree.Insert(8f);
             tree.Insert(7f);
             tree.Insert(6f);
-
+            
             tree.PrintTree();
+
+            var test = tree.Find(3f);
+
+            Console.WriteLine("TEST  SUCESSOR - " + test.GetInorderSucessor());
 
             Console.ReadLine();
         }

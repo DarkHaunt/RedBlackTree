@@ -7,12 +7,15 @@ namespace RedBlackTree
     public class RedBlackTree
     {
         private readonly NodeRotator _rotator;
+        private readonly NodeDeleter _deleter;
+        
         private INode _root;
 
 
         public RedBlackTree(float value)
         {
             _rotator = new NodeRotator();
+            _deleter = new NodeDeleter(_root);
 
             CreateRootNode(value);
         }
