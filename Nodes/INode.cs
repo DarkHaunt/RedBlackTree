@@ -12,10 +12,13 @@
         INode Grandparent { get; }
 
 
+        INode GetMinimumOfSubTree();
+        bool IsRightChildOf(INode node);
+        bool IsLeftChildOf(INode node);
+
 
         void SetColor(Color color);
         void SetParent(INode node);
-        INode GetInorderSucessor();
         void SetLeftChild(INode node);
         void SetRightChild(INode node);
         void SwapColor();

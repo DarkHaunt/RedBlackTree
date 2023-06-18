@@ -14,12 +14,16 @@ namespace RedBlackTree
 
         public RedBlackTree(float value)
         {
-            _rotator = new NodeRotator();
-            _deleter = new NodeDeleter(_root);
-
             CreateRootNode(value);
+
+            _rotator = new NodeRotator();
+            _deleter = new NodeDeleter(this);
         }
 
+        public void SetRootNode(INode root)
+        {
+            _root = root;
+        }
 
         public void Insert(float value)
         {
@@ -30,6 +34,31 @@ namespace RedBlackTree
             }
 
             TryToInsertValueInto(_root, value);
+        }
+
+        public INode Find(float value)
+        {
+            return FindValue(_root);
+
+            INode FindValue(INode node)
+            {
+                if (node.Value == value) // TODO: Write properly float comparer or get from internet
+                    return node;
+
+                var nextNode = value > node.Value ? node.RightChild : node.LeftChild;
+
+                return nextNode.IsNull ? nextNode : FindValue(nextNode);
+            }
+        }
+
+        public void DeleteNode(float value)
+        {
+            var node = Find(value);
+
+            if (node.IsNull)
+                return;
+
+            _deleter.DeleteNode(node);
         }
 
         private void TryToInsertValueInto(INode root, float currentValue)
@@ -98,24 +127,10 @@ namespace RedBlackTree
             }
         }
 
-        public INode Find(float value)
-        {
-            return FindValue(_root);
-
-            INode FindValue(INode node)
-            {
-                if (node.Value == value) // TODO: Write properly float comparer or get from internet
-                    return node;
-
-                var nextNode = value > node.Value ? node.RightChild : node.LeftChild;
-
-                return nextNode.IsNull ? nextNode : FindValue(nextNode);
-            }
-        }
-
         private void CreateRootNode(float value)
         {
-            _root = new Node(value);
+            SetRootNode(new Node(value));
+
             _root.SetColor(Color.Black);
         }
 

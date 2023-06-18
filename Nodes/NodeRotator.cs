@@ -13,16 +13,16 @@
 
             grandparent.SwapColor();
 
-            if (grandparent.LeftChild == node.Parent)
+            if (parent.IsLeftChildOf(grandparent))
             {
-                if (parent.RightChild == node)
+                if (node.IsRightChildOf(parent))
                     parent = LeftRightRotationParent(node, grandparent);
 
                 grandparent = LeftRotation(grandparent);
             }
             else
             {
-                if (parent.LeftChild == node)
+                if (node.IsLeftChildOf(parent))
                     parent = RightLeftRotationParent(node, grandparent);
 
                 grandparent = RightRotation(grandparent);

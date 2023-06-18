@@ -14,12 +14,18 @@ namespace RedBlackTree
             tree.Insert(8f);
             tree.Insert(7f);
             tree.Insert(6f);
-            
+
             tree.PrintTree();
 
-            var test = tree.Find(3f);
+            // tree.DeleteNode(3f); // Left root subtree + // TODO: Write unit tests
+            // tree.DeleteNode(6f); // Most left in right root subtree +
+            // tree.DeleteNode(20f);// Node, with single right parent +
+            // tree.DeleteNode(7f); // Delete 2 child node +
+            // tree.DeleteNode(5f); // Delete root node +
 
-            Console.WriteLine("TEST  SUCESSOR - " + test.GetInorderSucessor());
+            Console.WriteLine("---------\n\n");
+
+            tree.PrintTree();
 
             Console.ReadLine();
         }

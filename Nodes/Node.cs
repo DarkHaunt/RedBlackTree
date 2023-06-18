@@ -42,6 +42,14 @@ namespace RedBlackTree.Nodes
             LeftChild = Parent = RightChild = NullableContainer.NullNode;
         }
 
+        public Node(INode node)
+        {
+            Value = node.Value;
+            Color = node.Color;
+            Parent = node.Parent;
+            LeftChild = node.LeftChild;
+            RightChild = node.RightChild;
+        }
 
         public void SwapColor()
         {
@@ -53,28 +61,14 @@ namespace RedBlackTree.Nodes
             Color = color;
         }
 
-        public INode GetInorderSucessor()
+        public INode GetMinimumOfSubTree()
         {
-            if (!RightChild.IsNull)
-            {
-                var sucessor = RightChild;
+            INode minimal = this;
 
-                while (!sucessor.LeftChild.IsNull)
-                    sucessor = sucessor.LeftChild;
+            while (!minimal.LeftChild.IsNull)
+                minimal = minimal.LeftChild;
 
-                return sucessor;
-            }
-
-            var parent = Parent;
-            INode temp = this;
-
-            while (!parent.IsNull && parent.RightChild == temp) // TODO: Make a method in INode for right \ left child
-            {
-                temp = parent;
-                parent = parent.Parent;
-            }
-
-            return parent;
+            return minimal;
         }
 
         public void SetParent(INode node)
@@ -96,6 +90,16 @@ namespace RedBlackTree.Nodes
                 throw new ArgumentException("Node that you're trying to insert as RIGHT has lower value, than current node");
 
             RightChild = node;
+        }
+
+        public bool IsLeftChildOf(INode node)
+        {
+            return node.LeftChild == (INode)this;
+        }
+
+        public bool IsRightChildOf(INode node)
+        {
+            return node.RightChild == (INode)this;
         }
 
 

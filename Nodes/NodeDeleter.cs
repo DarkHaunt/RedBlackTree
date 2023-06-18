@@ -1,33 +1,59 @@
-﻿using RedBlackTree.Nullables;
-
+﻿
 namespace RedBlackTree.Nodes
 {
     public class NodeDeleter
     {
-        private INode _root;
+        private readonly RedBlackTree _tree;
 
-        public NodeDeleter(INode root)
+
+        public NodeDeleter(RedBlackTree tree)
         {
-            _root = root;
+            _tree = tree;
         }
 
 
-        public void DeleteNode(INode node)
+        public void DeleteNode(INode deleteNode)
         {
-            var nodeParent = node.Parent;
-            var originColor = node.Color;
+            var originColor = deleteNode.Color;
 
-            INode nodeToTransplate;
+            if (IsOneOrMoreChildrenAreNull(deleteNode, out INode nodeToTransplate))
+                Transplant(deleteNode, nodeToTransplate);
+            else
+            {
+                var leftSubTree = deleteNode.LeftChild;
+                var righSubTree = deleteNode.RightChild;
 
-            if (node.RightChild.IsNull)
-                nodeToTransplate = node.LeftChild;
-            else if (node.LeftChild.IsNull)
-                nodeToTransplate = node.RightChild;
-            //else
-                
+                var minimalInSubTree = righSubTree.GetMinimumOfSubTree();
 
+                if (IsOneOrMoreChildrenAreNull(minimalInSubTree, out INode transplantChild))
+                    Transplant(minimalInSubTree, transplantChild);
 
-           // BalanceAfterDelition(nodeToTransplate);
+                Transplant(deleteNode, minimalInSubTree);
+
+                minimalInSubTree.SetLeftChild(leftSubTree);
+
+                if (!leftSubTree.IsNull)
+                    leftSubTree.SetParent(minimalInSubTree);
+
+                if (righSubTree != minimalInSubTree)
+                {
+                    minimalInSubTree.SetRightChild(righSubTree);
+                    righSubTree.SetParent(minimalInSubTree);
+                }
+            }
+
+            if (originColor == Color.Black)
+                BalanceAfterDelition(nodeToTransplate);
+        }
+
+        private bool IsOneOrMoreChildrenAreNull(INode node, out INode childToTransplate)
+        {
+            var leftChildIsNull = node.LeftChild.IsNull;
+            var rightChildIsNull = node.RightChild.IsNull;
+
+            childToTransplate = leftChildIsNull ? node.RightChild : node.LeftChild;
+
+            return leftChildIsNull || rightChildIsNull;
         }
 
         private void Transplant(INode node, INode transplantNode)
@@ -35,52 +61,19 @@ namespace RedBlackTree.Nodes
             var parent = node.Parent;
 
             if (parent.IsNull)
-                _root = parent;
-            else if (parent.LeftChild == node)
+                _tree.SetRootNode(transplantNode);
+            else if (node.IsLeftChildOf(parent))
                 parent.SetLeftChild(transplantNode);
             else
                 parent.SetRightChild(transplantNode);
 
-            transplantNode.SetParent(node);
+            if (!transplantNode.IsNull)
+                transplantNode.SetParent(parent);
         }
 
         private void BalanceAfterDelition(INode node)
         {
 
-        }
-
-        private bool NodeHasNoChildren(INode node)
-        {
-            var rightChild = node.RightChild;
-            var leftChild = node.LeftChild;
-
-            return rightChild.IsNull && leftChild.IsNull;
-        }
-
-        private bool NodeHasOneChild(INode node, out INode child)
-        {
-            var rightChild = node.RightChild;
-            var leftChild = node.LeftChild;
-
-            var hasOnlyOneChild = rightChild.IsNull ^ leftChild.IsNull;
-
-            if (!hasOnlyOneChild)
-            {
-                child = NullableContainer.NullNode;
-                return false;
-            }
-
-            child = rightChild.IsNull ? leftChild : rightChild;
-
-            return true;
-        }
-
-        private bool NodeHasBothChildren(INode node)
-        {
-            var rightChild = node.RightChild;
-            var leftChild = node.LeftChild;
-
-            return !rightChild.IsNull && !leftChild.IsNull;
         }
     }
 }

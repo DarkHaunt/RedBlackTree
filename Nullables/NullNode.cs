@@ -20,7 +20,13 @@ namespace RedBlackTree.Nullables
         public NullNode() {}
 
 
-        public INode GetInorderSucessor()
+        public INode GetMinimumOfSubTree()
+            => throw NullNodeException.Create();
+
+        public bool IsRightChildOf(INode node)
+            => throw NullNodeException.Create();
+
+        public bool IsLeftChildOf(INode node)
             => throw NullNodeException.Create();
 
         public void SetColor(Color color)
