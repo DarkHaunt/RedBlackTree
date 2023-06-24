@@ -1,8 +1,8 @@
-﻿using RedBlackTree.Nodes;
+﻿using RedBlackTreeRealisation.Nodes;
+using RedBlackTreeRealisation.Nullables;
 using System;
 
-
-namespace RedBlackTree
+namespace RedBlackTreeRealisation
 {
     public class RedBlackTree
     {
@@ -12,6 +12,14 @@ namespace RedBlackTree
         private INode _root;
 
 
+        public RedBlackTree()
+        {
+            _root = NullableContainer.NullNode;
+
+            _rotator = new NodeRotator();
+            _deleter = new NodeDeleter(this);
+        }
+
         public RedBlackTree(float value)
         {
             CreateRootNode(value);
@@ -19,6 +27,7 @@ namespace RedBlackTree
             _rotator = new NodeRotator();
             _deleter = new NodeDeleter(this);
         }
+
 
         public void SetRootNode(INode root)
         {
@@ -42,12 +51,12 @@ namespace RedBlackTree
 
             INode FindValue(INode node)
             {
-                if (node.Value == value) // TODO: Write properly float comparer or get from internet
+                if (node.Value == value || node.IsNull) // TODO: Write properly float comparer or get from internet
                     return node;
 
                 var nextNode = value > node.Value ? node.RightChild : node.LeftChild;
 
-                return nextNode.IsNull ? nextNode : FindValue(nextNode);
+                return FindValue(nextNode);
             }
         }
 

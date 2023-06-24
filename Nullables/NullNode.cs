@@ -1,8 +1,8 @@
-﻿using RedBlackTree.Nodes;
+﻿using RedBlackTreeRealisation.Nodes;
 using System;
 
 
-namespace RedBlackTree.Nullables
+namespace RedBlackTreeRealisation.Nullables
 {
     public class NullNode : INode
     {

@@ -1,4 +1,4 @@
-﻿namespace RedBlackTree.Nodes
+﻿namespace RedBlackTreeRealisation.Nodes
 {
     public class NodeRotator
     {

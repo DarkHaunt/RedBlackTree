@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RedBlackTree
+namespace RedBlackTreeRealisation
 {
     class Program
     {

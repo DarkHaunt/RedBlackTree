@@ -1,6 +1,6 @@
 ﻿
 
-namespace RedBlackTree.Nullables
+namespace RedBlackTreeRealisation.Nullables
 {
     public static class NullableContainer
     {

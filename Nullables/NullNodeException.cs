@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RedBlackTree.Nullables
+namespace RedBlackTreeRealisation.Nullables
 {
     public class NullNodeException : ArgumentNullException
     {
