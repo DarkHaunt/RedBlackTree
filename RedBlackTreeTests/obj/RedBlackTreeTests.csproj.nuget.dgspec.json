@@ -1,35 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Solutions C#\\RedBlackTreeTests\\RedBlackTreeTests.csproj": {}
+    "D:\\C#\\Red-Black Tree\\RedBlackTreeTests\\RedBlackTreeTests.csproj": {}
   },
   "projects": {
-    "D:\\Solutions C#\\RedBlackTreeTests\\RedBlackTreeTests.csproj": {
+    "D:\\C#\\Red-Black Tree\\RedBlackTreeTests\\RedBlackTreeTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Solutions C#\\RedBlackTreeTests\\RedBlackTreeTests.csproj",
+        "projectUniqueName": "D:\\C#\\Red-Black Tree\\RedBlackTreeTests\\RedBlackTreeTests.csproj",
         "projectName": "RedBlackTreeTests",
-        "projectPath": "D:\\Solutions C#\\RedBlackTreeTests\\RedBlackTreeTests.csproj",
-        "packagesPath": "C:\\Users\\kyzyk\\.nuget\\packages\\",
-        "outputPath": "D:\\Solutions C#\\RedBlackTreeTests\\obj\\",
+        "projectPath": "D:\\C#\\Red-Black Tree\\RedBlackTreeTests\\RedBlackTreeTests.csproj",
+        "packagesPath": "C:\\Users\\YarikDark\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\Red-Black Tree\\RedBlackTreeTests\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\kyzyk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\YarikDark\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net5.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\Solutions C#\\RedBlackTree\\RedBlackTree.csproj": {
-                "projectPath": "D:\\Solutions C#\\RedBlackTree\\RedBlackTree.csproj"
+              "D:\\C#\\Red-Black Tree\\RedBlackTree\\RedBlackTree.csproj": {
+                "projectPath": "D:\\C#\\Red-Black Tree\\RedBlackTree\\RedBlackTree.csproj"
               }
             }
           }
@@ -41,8 +45,8 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net5.0": {
+          "targetAlias": "net5.0",
           "dependencies": {
             "MSTest.TestAdapter": {
               "target": "Package",
@@ -67,8 +71,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -77,33 +80,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Solutions C#\\RedBlackTree\\RedBlackTree.csproj": {
+    "D:\\C#\\Red-Black Tree\\RedBlackTree\\RedBlackTree.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Solutions C#\\RedBlackTree\\RedBlackTree.csproj",
+        "projectUniqueName": "D:\\C#\\Red-Black Tree\\RedBlackTree\\RedBlackTree.csproj",
         "projectName": "RedBlackTree",
-        "projectPath": "D:\\Solutions C#\\RedBlackTree\\RedBlackTree.csproj",
-        "packagesPath": "C:\\Users\\kyzyk\\.nuget\\packages\\",
-        "outputPath": "D:\\Solutions C#\\RedBlackTree\\obj\\",
+        "projectPath": "D:\\C#\\Red-Black Tree\\RedBlackTree\\RedBlackTree.csproj",
+        "packagesPath": "C:\\Users\\YarikDark\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\Red-Black Tree\\RedBlackTree\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\kyzyk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\YarikDark\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net5.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {}
           }
         },
@@ -114,16 +121,15 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net5.0": {
+          "targetAlias": "net5.0",
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -132,7 +138,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
         }
       }
     }

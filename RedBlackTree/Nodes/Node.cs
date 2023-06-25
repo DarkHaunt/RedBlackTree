@@ -17,7 +17,7 @@ namespace RedBlackTreeRealisation.Nodes
             get
             {
                 var grandparent = Grandparent;
-                var uncle = grandparent.LeftChild == Parent ? grandparent.RightChild : grandparent.LeftChild;
+                var uncle = Parent.IsLeftChildOf(grandparent) ? grandparent.RightChild : grandparent.LeftChild;
 
                 return uncle;
             }
@@ -28,9 +28,22 @@ namespace RedBlackTreeRealisation.Nodes
             get
             {
                 if (Parent.IsNull)
-                    throw new ArgumentException($"Node {this} have null-parent, so it have not a grandparent");
+                    throw new ArgumentException($"Grandparent of node {this} can't be found, because it have null-parent");
 
                 return Parent.Parent;
+            }
+        }
+
+        public INode Subling
+        {
+            get
+            {
+                if (Parent.IsNull)
+                    throw new ArgumentException($"Subling of node {this} can't be found, because it have null-parent");
+
+                var subling = this.IsLeftChildOf(Parent) ? Parent.RightChild : Parent.LeftChild;
+
+                return subling;
             }
         }
 

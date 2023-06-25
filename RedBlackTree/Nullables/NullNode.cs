@@ -13,6 +13,7 @@ namespace RedBlackTreeRealisation.Nullables
         public INode Grandparent => throw NullNodeException.Create();
         public INode RightChild => throw NullNodeException.Create();
         public INode LeftChild => throw NullNodeException.Create();
+        public INode Subling => throw NullNodeException.Create();
         public INode Parent => throw NullNodeException.Create();
         public INode Uncle => throw NullNodeException.Create();
 

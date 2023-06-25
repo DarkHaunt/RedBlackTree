@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {
+    "net5.0": {
       "coverlet.collector/3.2.0": {
         "type": "package",
         "build": {
@@ -170,9 +170,7 @@
           "lib/netcoreapp3.1/Microsoft.TestPlatform.Utilities.dll": {},
           "lib/netcoreapp3.1/Microsoft.VisualStudio.TestPlatform.Common.dll": {},
           "lib/netcoreapp3.1/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll": {},
-          "lib/netcoreapp3.1/testhost.dll": {
-            "related": ".deps.json"
-          }
+          "lib/netcoreapp3.1/testhost.dll": {}
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.TestPlatform.CommunicationUtilities.dll": {},
@@ -182,9 +180,7 @@
           "lib/netcoreapp3.1/Microsoft.TestPlatform.Utilities.dll": {},
           "lib/netcoreapp3.1/Microsoft.VisualStudio.TestPlatform.Common.dll": {},
           "lib/netcoreapp3.1/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll": {},
-          "lib/netcoreapp3.1/testhost.dll": {
-            "related": ".deps.json"
-          }
+          "lib/netcoreapp3.1/testhost.dll": {}
         },
         "resource": {
           "lib/netcoreapp3.1/cs/Microsoft.TestPlatform.CommunicationUtilities.resources.dll": {
@@ -323,14 +319,10 @@
       "MSTest.TestFramework/2.2.10": {
         "type": "package",
         "compile": {
-          "lib/net5.0/Microsoft.VisualStudio.TestPlatform.TestFramework.dll": {
-            "related": ".XML"
-          }
+          "lib/net5.0/Microsoft.VisualStudio.TestPlatform.TestFramework.dll": {}
         },
         "runtime": {
-          "lib/net5.0/Microsoft.VisualStudio.TestPlatform.TestFramework.dll": {
-            "related": ".XML"
-          }
+          "lib/net5.0/Microsoft.VisualStudio.TestPlatform.TestFramework.dll": {}
         },
         "build": {
           "build/net5.0/MSTest.TestFramework.targets": {}
@@ -339,27 +331,19 @@
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "NuGet.Frameworks/5.11.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/NuGet.Frameworks.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/NuGet.Frameworks.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/NuGet.Frameworks.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/NuGet.Frameworks.dll": {}
         }
       },
       "runtime.native.System/4.3.0": {
@@ -383,9 +367,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         }
       },
       "System.Diagnostics.Debug/4.3.0": {
@@ -396,9 +378,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         }
       },
       "System.Diagnostics.TextWriterTraceListener/4.3.0": {
@@ -412,9 +392,7 @@
           "System.Threading": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Diagnostics.TextWriterTraceListener.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.Diagnostics.TextWriterTraceListener.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Diagnostics.TextWriterTraceListener.dll": {}
@@ -434,9 +412,7 @@
           "runtime.native.System": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Diagnostics.TraceSource.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.Diagnostics.TraceSource.dll": {}
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netstandard1.3/System.Diagnostics.TraceSource.dll": {
@@ -457,9 +433,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         }
       },
       "System.IO/4.3.0": {
@@ -472,9 +446,7 @@
           "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/System.IO.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/System.IO.dll": {}
         }
       },
       "System.Reflection/4.3.0": {
@@ -487,22 +459,16 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/_._": {}
         }
       },
       "System.Reflection.Metadata/1.6.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/System.Reflection.Metadata.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/System.Reflection.Metadata.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/System.Reflection.Metadata.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/System.Reflection.Metadata.dll": {}
         }
       },
       "System.Reflection.Primitives/4.3.0": {
@@ -513,9 +479,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.0/_._": {}
         }
       },
       "System.Resources.ResourceManager/4.3.0": {
@@ -528,9 +492,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.0/_._": {}
         }
       },
       "System.Runtime/4.3.0": {
@@ -540,9 +502,7 @@
           "Microsoft.NETCore.Targets": "1.1.0"
         },
         "compile": {
-          "ref/netstandard1.5/System.Runtime.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/System.Runtime.dll": {}
         }
       },
       "System.Runtime.Extensions/4.3.0": {
@@ -553,9 +513,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/_._": {}
         }
       },
       "System.Text.Encoding/4.3.0": {
@@ -566,9 +524,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Text.Encoding.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.Text.Encoding.dll": {}
         }
       },
       "System.Threading/4.3.0": {
@@ -578,9 +534,7 @@
           "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Threading.dll": {}
@@ -594,14 +548,12 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Threading.Tasks.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.Threading.Tasks.dll": {}
         }
       },
       "RedBlackTree/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
+        "framework": ".NETCoreApp,Version=v5.0",
         "compile": {
           "bin/placeholder/RedBlackTree.dll": {}
         },
@@ -2310,7 +2262,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net6.0": [
+    "net5.0": [
       "MSTest.TestAdapter >= 2.2.10",
       "MSTest.TestFramework >= 2.2.10",
       "Microsoft.NET.Test.Sdk >= 17.5.0",
@@ -2319,34 +2271,39 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kyzyk\\.nuget\\packages\\": {}
+    "C:\\Users\\YarikDark\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Solutions C#\\RedBlackTreeTests\\RedBlackTreeTests.csproj",
+      "projectUniqueName": "D:\\C#\\Red-Black Tree\\RedBlackTreeTests\\RedBlackTreeTests.csproj",
       "projectName": "RedBlackTreeTests",
-      "projectPath": "D:\\Solutions C#\\RedBlackTreeTests\\RedBlackTreeTests.csproj",
-      "packagesPath": "C:\\Users\\kyzyk\\.nuget\\packages\\",
-      "outputPath": "D:\\Solutions C#\\RedBlackTreeTests\\obj\\",
+      "projectPath": "D:\\C#\\Red-Black Tree\\RedBlackTreeTests\\RedBlackTreeTests.csproj",
+      "packagesPath": "C:\\Users\\YarikDark\\.nuget\\packages\\",
+      "outputPath": "D:\\C#\\Red-Black Tree\\RedBlackTreeTests\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\kyzyk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\YarikDark\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0"
+        "net5.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net5.0": {
+          "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\Solutions C#\\RedBlackTree\\RedBlackTree.csproj": {
-              "projectPath": "D:\\Solutions C#\\RedBlackTree\\RedBlackTree.csproj"
+            "D:\\C#\\Red-Black Tree\\RedBlackTree\\RedBlackTree.csproj": {
+              "projectPath": "D:\\C#\\Red-Black Tree\\RedBlackTree\\RedBlackTree.csproj"
             }
           }
         }
@@ -2358,8 +2315,8 @@
       }
     },
     "frameworks": {
-      "net6.0": {
-        "targetAlias": "net6.0",
+      "net5.0": {
+        "targetAlias": "net5.0",
         "dependencies": {
           "MSTest.TestAdapter": {
             "target": "Package",
@@ -2384,8 +2341,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -2394,7 +2350,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -17,7 +17,7 @@ namespace RedBlackTreeRealisation
             _root = NullableContainer.NullNode;
 
             _rotator = new NodeRotator();
-            _deleter = new NodeDeleter(this);
+            _deleter = new NodeDeleter(this, _rotator);
         }
 
         public RedBlackTree(float value)
@@ -25,14 +25,15 @@ namespace RedBlackTreeRealisation
             CreateRootNode(value);
 
             _rotator = new NodeRotator();
-            _deleter = new NodeDeleter(this);
+            _deleter = new NodeDeleter(this, _rotator);
         }
 
 
         public void SetRootNode(INode root)
-        {
-            _root = root;
-        }
+            => _root = root;
+
+        public INode GetRoot()
+            => _root;
 
         public void Insert(float value)
         {
@@ -142,6 +143,7 @@ namespace RedBlackTreeRealisation
 
             _root.SetColor(Color.Black);
         }
+
 
         #region [Printing]
 

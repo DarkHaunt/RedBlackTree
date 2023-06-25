@@ -4,8 +4,8 @@
     {
         public NodeRotator() {}
 
-
-        public INode RotateLocalTree(INode node)
+        
+        public INode RotateLocalTree(INode node) // TODO: Extract in Tree or refactor name
         {
             var parent = node.Parent;
             var grandparent = node.Grandparent;
@@ -16,14 +16,14 @@
             if (parent.IsLeftChildOf(grandparent))
             {
                 if (node.IsRightChildOf(parent))
-                    parent = LeftRightRotationParent(node, grandparent);
+                    parent = LeftRightRotation(node);
 
                 grandparent = LeftRotation(grandparent);
             }
             else
             {
                 if (node.IsLeftChildOf(parent))
-                    parent = RightLeftRotationParent(node, grandparent);
+                    parent = RightLeftRotation(node);
 
                 grandparent = RightRotation(grandparent);
             }
@@ -42,64 +42,67 @@
             return grandparent;
         }
 
-        private INode LeftRotation(INode node)
+        public INode LeftRotation(INode node)
         {
-            var leftChildOfGrandparent = node.LeftChild;
-            var rightChildOfGrandparentLeftChild = leftChildOfGrandparent.RightChild;
+            var leftChild = node.LeftChild;
+            var rightChildOfLeftChild = leftChild.RightChild;
 
-            leftChildOfGrandparent.SetRightChild(node);
+            leftChild.SetRightChild(node);
 
-            node.SetLeftChild(rightChildOfGrandparentLeftChild);
-            node.SetParent(leftChildOfGrandparent);
+            node.SetLeftChild(rightChildOfLeftChild);
+            node.SetParent(leftChild);
 
-            if (!rightChildOfGrandparentLeftChild.IsNull)
-                rightChildOfGrandparentLeftChild.SetParent(node);
+            if (!rightChildOfLeftChild.IsNull)
+                rightChildOfLeftChild.SetParent(node);
 
-            return leftChildOfGrandparent;
+            return leftChild;
         }
 
-        private INode RightRotation(INode node)
-        {
-            var rightChildOfGrandparent = node.RightChild;
-            var leftChildOfGrandparentRightChild = rightChildOfGrandparent.LeftChild;
-
-            rightChildOfGrandparent.SetLeftChild(node);
-
-            node.SetRightChild(leftChildOfGrandparentRightChild);
-            node.SetParent(rightChildOfGrandparent);
-
-            if (!leftChildOfGrandparentRightChild.IsNull)
-                leftChildOfGrandparentRightChild.SetParent(node);
-
-            return rightChildOfGrandparent;
-        }
-
-        private INode RightLeftRotationParent(INode node, INode grandparent)
+        public INode RightRotation(INode node)
         {
             var rightChild = node.RightChild;
-            var parent = node.Parent;
+            var leftChildOfRightChild = rightChild.LeftChild;
 
-            grandparent.SetRightChild(node);
-            node.SetParent(grandparent);
-            node.SetRightChild(parent);
+            rightChild.SetLeftChild(node);
 
-            parent.SetLeftChild(rightChild);
-            parent.SetParent(node);
+            node.SetRightChild(leftChildOfRightChild);
+            node.SetParent(rightChild);
 
-            return node;
+            if (!leftChildOfRightChild.IsNull)
+                leftChildOfRightChild.SetParent(node);
+
+            return rightChild;
         }
 
-        private INode LeftRightRotationParent(INode node, INode grandparent)
+        public INode LeftRightRotation(INode node)
         {
             var leftChild = node.LeftChild;
             var grand = node.Grandparent;
             var parent = node.Parent;
 
             grand.SetLeftChild(node);
-            node.SetParent(grandparent);
+
             node.SetLeftChild(parent);
+            node.SetParent(grand);
 
             parent.SetRightChild(leftChild);
+            parent.SetParent(node);
+
+            return node;
+        }
+
+        public INode RightLeftRotation(INode node)
+        {
+            var rightChild = node.RightChild;
+            var grand = node.Grandparent;
+            var parent = node.Parent;
+
+            grand.SetRightChild(node);
+
+            node.SetRightChild(parent);
+            node.SetParent(grand);
+
+            parent.SetLeftChild(rightChild);
             parent.SetParent(node);
 
             return node;
