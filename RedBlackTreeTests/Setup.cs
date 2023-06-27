@@ -6,7 +6,10 @@ namespace RedBlackTreeTests.TestsSetup
     public static class Setup
     {
         public static RedBlackTree CreateTree()
-            => new RedBlackTree();   
+            => new RedBlackTree();          
+        
+        public static RedBlackTree CreateTree(float value)
+            => new RedBlackTree(value);   
         
         public static NodeRotator CreateNodeRotator()
             => new NodeRotator();

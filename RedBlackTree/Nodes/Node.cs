@@ -34,7 +34,7 @@ namespace RedBlackTreeRealisation.Nodes
             }
         }
 
-        public INode Subling
+        public INode Sibling
         {
             get
             {

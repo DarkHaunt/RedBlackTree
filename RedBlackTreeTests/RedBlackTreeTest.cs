@@ -27,12 +27,12 @@ namespace RedBlackTreeTests
         [TestMethod]
         public void Inserted_Element_Found_In_Tree()
         {
-            var inserValue = 1f;
+            var insertValue = 1f;
 
-            _tree.Insert(inserValue);
-            var element = _tree.Find(inserValue);
+            _tree.Insert(insertValue);
+            var element = _tree.Find(insertValue);
 
-            Assert.AreEqual(element.Value, inserValue);
+            Assert.AreEqual(element.Value, insertValue);
         }    
         
         [TestMethod]

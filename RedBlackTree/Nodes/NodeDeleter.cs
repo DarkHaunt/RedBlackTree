@@ -83,7 +83,7 @@ namespace RedBlackTreeRealisation.Nodes
 
             void PerformBlackColor()
             {
-                var subling = node.Subling;
+                var subling = node.Sibling;
                 var parent = node.Parent;
 
                 var isSublingLeftChild = subling.IsLeftChildOf(parent);

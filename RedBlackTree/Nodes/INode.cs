@@ -9,7 +9,7 @@
         INode RightChild { get; }
         INode LeftChild { get; }
         INode Uncle { get; }
-        INode Subling { get; }
+        INode Sibling { get; }
         INode Grandparent { get; }
 
 
