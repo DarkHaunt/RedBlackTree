@@ -91,9 +91,9 @@ namespace RedBlackTreeRealisation.Nodes
                 if(AreBothOfSiblingChildrenRed(subling))
                 {
                     if (isSublingLeftChild)
-                        _rotator.LeftRotation(parent);
+                        _rotator.LeftLeftRotation(parent);
                     else
-                        _rotator.RightRotation(parent);
+                        _rotator.RightRightRotation(parent);
                 }
                 else if (IsOneOfSiblingChildRed(subling, out INode redChild))
                 {
@@ -102,7 +102,7 @@ namespace RedBlackTreeRealisation.Nodes
                     if(isSublingLeftChild)
                     {
                         if (isRedChildLeft)
-                            _rotator.LeftRotation(parent); // TODO: Refactor argument income
+                            _rotator.LeftLeftRotation(parent); // TODO: Refactor argument income
                         else
                             _rotator.LeftRightRotation(redChild);
                     }
@@ -111,7 +111,7 @@ namespace RedBlackTreeRealisation.Nodes
                         if (isRedChildLeft)
                             _rotator.RightLeftRotation(redChild);
                         else
-                            _rotator.RightRotation(parent);
+                            _rotator.RightRightRotation(parent);
                     }
                 }
                 else
