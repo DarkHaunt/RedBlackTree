@@ -9,8 +9,8 @@ namespace RedBlackTreeRealisation.Nodes
         public float Value { get; }
         public Color Color { get; private set; }
         public INode Parent { get; private set; }
-        public INode RightChild { get; private set; }
         public INode LeftChild { get; private set; }
+        public INode RightChild { get; private set; }
 
         public INode Uncle
         {
@@ -39,11 +39,11 @@ namespace RedBlackTreeRealisation.Nodes
             get
             {
                 if (Parent.IsNull)
-                    throw new ArgumentException($"Subling of node {this} can't be found, because it have null-parent");
+                    throw new ArgumentException($"Sibling of node {this} can't be found, because it have null-parent");
 
-                var subling = this.IsLeftChildOf(Parent) ? Parent.RightChild : Parent.LeftChild;
+                var sibling = IsLeftChildOf(Parent) ? Parent.RightChild : Parent.LeftChild;
 
-                return subling;
+                return sibling;
             }
         }
 
@@ -91,7 +91,7 @@ namespace RedBlackTreeRealisation.Nodes
 
         public void SetLeftChild(INode node)
         {
-            if (node.Value > Value)
+            if (!node.IsNull && node.Value > Value)
                 throw new ArgumentException("Node that you're trying to insert as LEFT has bigger value, than current node");
 
             LeftChild = node;
@@ -99,7 +99,7 @@ namespace RedBlackTreeRealisation.Nodes
 
         public void SetRightChild(INode node)
         {
-            if (node.Value <= Value)
+            if (!node.IsNull && node.Value <= Value)
                 throw new ArgumentException("Node that you're trying to insert as RIGHT has lower value, than current node");
 
             RightChild = node;
@@ -107,12 +107,12 @@ namespace RedBlackTreeRealisation.Nodes
 
         public bool IsLeftChildOf(INode node)
         {
-            return node.LeftChild == (INode)this;
+            return node.LeftChild == this;
         }
 
         public bool IsRightChildOf(INode node)
         {
-            return node.RightChild == (INode)this;
+            return node.RightChild == this;
         }
 
 

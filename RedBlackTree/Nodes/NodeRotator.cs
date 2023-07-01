@@ -1,10 +1,8 @@
-﻿
-
-namespace RedBlackTreeRealisation.Nodes
+﻿namespace RedBlackTreeRealisation.Nodes
 {
     public class NodeRotator
     {
-        public INode RotateLocalTree(INode node) // TODO: Move into Tree or refactor name
+        public INode RotateLocalTree(INode node)
         {
             var parent = node.Parent;
             var grandparent = node.Grandparent;
@@ -12,10 +10,10 @@ namespace RedBlackTreeRealisation.Nodes
 
             INode localRoot;
 
-            if (parent.IsLeftChildOf(grandparent))
-                localRoot = node.IsRightChildOf(parent) ? LeftRightRotation(node) : LeftLeftRotation(grandparent);
+            if (parent.IsLeftChildOf(grandparent)) 
+                localRoot = node.IsLeftChildOf(parent) ? LeftLeftRotation(node) : LeftRightRotation(node);
             else
-                localRoot = node.IsLeftChildOf(parent) ? RightLeftRotation(node) : RightRightRotation(grandparent);
+                localRoot = node.IsLeftChildOf(parent) ? RightLeftRotation(node) : RightRightRotation(node);
 
             if (!previousGrandparentParent.IsNull)
             {
@@ -23,6 +21,8 @@ namespace RedBlackTreeRealisation.Nodes
                     previousGrandparentParent.SetRightChild(localRoot);
                 else
                     previousGrandparentParent.SetLeftChild(localRoot);
+                
+                localRoot.SetParent(previousGrandparentParent);
             }
 
             return localRoot;
@@ -35,7 +35,6 @@ namespace RedBlackTreeRealisation.Nodes
             var rightParentChild = parent.RightChild;
 
             parent.SwapColor();
-            parent.SetLeftChild(node);
             parent.SetRightChild(grand);
 
             grand.SwapColor();
@@ -52,7 +51,6 @@ namespace RedBlackTreeRealisation.Nodes
             var leftParentChild = parent.LeftChild;
 
             parent.SwapColor();
-            parent.SetRightChild(node);
             parent.SetLeftChild(grand);
 
             grand.SwapColor();
