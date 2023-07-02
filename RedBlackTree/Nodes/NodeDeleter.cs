@@ -18,6 +18,7 @@ namespace RedBlackTreeRealisation.Nodes
         public void DeleteNode(INode deleteNode)
         {
             var originColor = deleteNode.Color;
+            var originRoot = _tree.GetRoot();
 
             if (AtLeastOneChildIsNull(deleteNode, out INode transplantNode))
                 Transplant(deleteNode, transplantNode);
@@ -29,25 +30,23 @@ namespace RedBlackTreeRealisation.Nodes
                 transplantNode = rightSubTree.GetMinimumOfSubTree();
                 originColor = transplantNode.Color;
 
-                if (AtLeastOneChildIsNull(transplantNode, out INode transplantChild))
-                    Transplant(transplantNode, transplantChild);
-
-                Transplant(deleteNode, transplantNode);
-
-                transplantNode.SetLeftChild(leftSubTree);
-
-                if (!leftSubTree.IsNull)
-                    leftSubTree.SetParent(transplantNode);
-
+                var rightChildOfTransplant = transplantNode.RightChild;
+                Transplant(transplantNode, rightChildOfTransplant);
+                
                 if (rightSubTree != transplantNode)
                 {
                     transplantNode.SetRightChild(rightSubTree);
                     rightSubTree.SetParent(transplantNode);
                 }
+
+                Transplant(deleteNode, transplantNode);
+
+                transplantNode.SetLeftChild(leftSubTree);
+                leftSubTree.SetParent(transplantNode);
             }
 
-            if (originColor == Color.Black)
-                BalanceAfterDeletion(deleteNode);
+            /*if (originColor == Color.Black)
+                BalanceAfterDeletion(deleteNode, originRoot);*/
         }
 
         private bool AtLeastOneChildIsNull(INode node, out INode childToTransplant)
@@ -75,21 +74,21 @@ namespace RedBlackTreeRealisation.Nodes
                 transplantNode.SetParent(parent);
         }
 
-        private void BalanceAfterDeletion(INode deletionNode)
+        private void BalanceAfterDeletion(INode deletionNode, INode originRoot)
         {
             var node = deletionNode;
-            var root = _tree.GetRoot();
-            var sibling = deletionNode.Sibling;
 
-            while (node != root && node.Color == Color.Black)
+            while (node != originRoot && node.Color == Color.Black)
             {
+                var sibling = deletionNode.Sibling;
+
                 if (sibling.Color == Color.Red)
                 {
                     sibling.SwapColor();
                     node.Parent.SetColor(Color.Red);
-                    
+
                     _rotator.LeftDeleteRotation(node.Parent);
-                    
+
                     sibling = node.Parent.RightChild;
                 }
 
@@ -104,23 +103,23 @@ namespace RedBlackTreeRealisation.Nodes
                     {
                         sibling.LeftChild.SetColor(Color.Black);
                         sibling.SetColor(Color.Red);
-                        
-                        _rotator.RightDeleteRotation(sibling); // TODO: Method Refactoring
+
+                        _rotator.RightDeleteRotation(sibling);
 
                         sibling = node.Parent.RightChild;
                     }
-                    
+
                     sibling.SetColor(node.Parent.Color);
-                    
+
                     node.Parent.SetColor(Color.Black);
                     sibling.RightChild.SetColor(Color.Black);
-                    
+
                     _rotator.LeftDeleteRotation(node.Parent);
 
-                    node = root;
+                    node = originRoot;
                 }
             }
-            
+
             node!.SetColor(Color.Black);
         }
     }

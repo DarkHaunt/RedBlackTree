@@ -97,7 +97,7 @@ namespace RedBlackTreeRealisation
 
         private void BalanceAfterInsertion(INode insertedNode)
         {
-            var parent = insertedNode.Parent;
+            var parent = insertedNode.Parent; // TODO: Must be 8,  not null node
 
             if (parent.Color == Color.Black || insertedNode == _root)
                 return;
@@ -134,6 +134,8 @@ namespace RedBlackTreeRealisation
 
                 if (grandparent == _root)
                     _root = localRoot;
+                
+                BalanceAfterInsertion(localRoot);
             }
         }
 

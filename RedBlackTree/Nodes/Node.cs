@@ -55,15 +55,7 @@ namespace RedBlackTreeRealisation.Nodes
             LeftChild = Parent = RightChild = NullableContainer.NullNode;
         }
 
-        public Node(INode node)
-        {
-            Value = node.Value;
-            Color = node.Color;
-            Parent = node.Parent;
-            LeftChild = node.LeftChild;
-            RightChild = node.RightChild;
-        }
-
+        
         public void SwapColor()
         {
             Color = (Color == Color.Black) ? Color.Red : Color.Black;

@@ -10,7 +10,7 @@
 
             INode localRoot;
 
-            if (parent.IsLeftChildOf(grandparent)) 
+            if (parent.IsLeftChildOf(grandparent))
                 localRoot = node.IsLeftChildOf(parent) ? LeftLeftRotation(node) : LeftRightRotation(node);
             else
                 localRoot = node.IsLeftChildOf(parent) ? RightLeftRotation(node) : RightRightRotation(node);
@@ -18,12 +18,12 @@
             if (!previousGrandparentParent.IsNull)
             {
                 if (grandparent.IsRightChildOf(previousGrandparentParent))
-                    previousGrandparentParent.SetRightChild(localRoot);
+                    grandparent.SetRightChild(localRoot);
                 else
-                    previousGrandparentParent.SetLeftChild(localRoot);
-                
-                localRoot.SetParent(previousGrandparentParent);
+                    grandparent.SetLeftChild(localRoot);
             }
+
+            localRoot.SetParent(previousGrandparentParent);
 
             return localRoot;
         }
@@ -71,6 +71,9 @@
             node.SetLeftChild(parent);
             node.SetParent(grandparent);
 
+            if (!leftChild.IsNull)
+                leftChild.SetParent(parent);
+
             parent.SetRightChild(leftChild);
             parent.SetParent(node);
 
@@ -88,6 +91,9 @@
             node.SetRightChild(parent);
             node.SetParent(grandparent);
 
+            if (!rightChild.IsNull)
+                rightChild.SetParent(parent);
+
             parent.SetLeftChild(rightChild);
             parent.SetParent(node);
 
@@ -98,18 +104,18 @@
         {
             var parent = node.Parent;
             var grandparent = node.Grandparent;
-            
+
             var rightChild = node.RightChild;
             var leftChildOfRight = rightChild.LeftChild;
 
             node.SetRightChild(leftChildOfRight);
-            
-            if(parent.IsLeftChildOf(grandparent))
+
+            if (parent.IsLeftChildOf(grandparent))
                 grandparent.SetLeftChild(node);
             else
                 grandparent.SetRightChild(node);
-        }        
-        
+        }
+
         public void RightDeleteRotation(INode node)
         {
             var parent = node.Parent;
@@ -118,8 +124,8 @@
 
             parent.SetLeftChild(rightChild);
             node.SetRightChild(parent);
-            
-            if(parent.IsLeftChildOf(grandparent))
+
+            if (parent.IsLeftChildOf(grandparent))
                 grandparent.SetLeftChild(node);
             else
                 grandparent.SetRightChild(node);

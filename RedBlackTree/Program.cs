@@ -6,24 +6,25 @@ namespace RedBlackTreeRealisation
     {
         static void Main(string[] args)
         {
-            var tree = new RedBlackTree(41f);
-
-            tree.Insert(22f);
-            tree.Insert(45f);
-            tree.Insert(78f);
-            tree.Insert(99f);
-            tree.Insert(11f);
+            var tree = new RedBlackTree(8f);
+            
+            tree.Insert(5f);
+            tree.Insert(15f);
             tree.Insert(12f);
-            tree.Insert(44f);
-            tree.Insert(43f);
-
+            tree.Insert(19f);
+            tree.Insert(9f);
+            tree.Insert(13f);
+            tree.Insert(23f);
+            tree.Insert(10f);
+            
             tree.PrintTree();
 
-            Console.WriteLine("---------\n\n");
+            /*Console.WriteLine("---------\n\n");
+            
+            tree.DeleteNode(19f);
+            tree.PrintTree();
 
-            //tree.PrintTree();
-
-            Console.ReadLine();
+            Console.ReadLine();*/
         }
     }
 }

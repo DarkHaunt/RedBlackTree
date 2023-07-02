@@ -41,6 +41,40 @@ namespace RedBlackTreeTests
             var root = _tree.Find(0f);
 
             Assert.AreEqual(root.IsNull, true);
+        }  
+        
+        [TestMethod]
+        public void Deleted_Value_Not_Found()
+        {
+            var insertValue = 1f;
+            var valueToDelete = 2f;
+            
+            _tree.Insert(insertValue);
+            _tree.Insert(valueToDelete);
+            
+            _tree.DeleteNode(valueToDelete);
+            
+            var node = _tree.Find(valueToDelete);
+
+            Assert.AreEqual(node.IsNull, true);
+        }  
+        
+        [TestMethod]
+        public void Delete_Tree_With_Root_And_One_Child_Child_Become_Root()
+        {
+            var rootValue = 1f;
+            var childValue = 2f;
+            
+            _tree.Insert(rootValue);
+            _tree.Insert(childValue);
+
+            var leftNodeChild = _tree.Find(childValue);
+            
+            _tree.DeleteNode(rootValue);
+            
+            var root = _tree.GetRoot();
+
+            Assert.AreEqual(root, leftNodeChild);
         }
     }
 }
