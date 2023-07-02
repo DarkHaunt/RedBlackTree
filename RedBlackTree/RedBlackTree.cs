@@ -37,7 +37,7 @@ namespace RedBlackTreeRealisation
 
         public void Insert(float value)
         {
-            if (_root.IsNull) // TODO: Make sure that deleting node will replace node with null-able node
+            if (_root.IsNull)
             {
                 CreateRootNode(value);
                 return;
@@ -97,7 +97,7 @@ namespace RedBlackTreeRealisation
 
         private void BalanceAfterInsertion(INode insertedNode)
         {
-            var parent = insertedNode.Parent; // TODO: Must be 8,  not null node
+            var parent = insertedNode.Parent;
 
             if (parent.Color == Color.Black || insertedNode == _root)
                 return;

@@ -30,6 +30,15 @@ namespace RedBlackTreeTests.TestsSetup
             var node = new Node(stubData.NodeValue);
             node.SetParent(parent);
 
+            var leftChild = new Node(stubData.LeftChildValue);
+            leftChild.SetParent(node);
+            
+            var rightChild = new Node(stubData.RightChildValue);
+            rightChild.SetParent(node);
+
+            node.SetRightChild(rightChild);
+            node.SetLeftChild(leftChild);
+            
             return node;
         }
     }
@@ -39,6 +48,9 @@ namespace RedBlackTreeTests.TestsSetup
         public float GrandparentValue;
         public float ParentValue;
         public float UncleValue;
+        
+        public float RightChildValue;
+        public float LeftChildValue;
         public float NodeValue;
     }
 }

@@ -19,12 +19,12 @@ namespace RedBlackTreeRealisation
             
             tree.PrintTree();
 
-            /*Console.WriteLine("---------\n\n");
+            Console.WriteLine("---------\n\n");
             
             tree.DeleteNode(19f);
             tree.PrintTree();
 
-            Console.ReadLine();*/
+            Console.ReadLine();
         }
     }
 }

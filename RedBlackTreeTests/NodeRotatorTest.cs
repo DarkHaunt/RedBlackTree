@@ -25,7 +25,10 @@ namespace RedBlackTreeTests
                 GrandparentValue = 2f,
                 ParentValue = 3f,
                 UncleValue = 1f,
-                NodeValue = 4f,
+                
+                RightChildValue = 4.5f,
+                LeftChildValue = 3.5f,
+                NodeValue = 4f
             };
 
             var node = Setup.CreateStubRotationTree(stubTreeData);
@@ -66,7 +69,10 @@ namespace RedBlackTreeTests
                 GrandparentValue = 3f,
                 ParentValue = 2f,
                 UncleValue = 4f,
-                NodeValue = 1f,
+                
+                RightChildValue = 1.5f,
+                LeftChildValue = 0.5f,
+                NodeValue = 1f
             };
 
             var node = Setup.CreateStubRotationTree(stubTreeData);
@@ -107,22 +113,22 @@ namespace RedBlackTreeTests
                 GrandparentValue = 4f,
                 ParentValue = 6f,
                 UncleValue = 1f,
-                NodeValue = 5f,
+                
+                RightChildValue = 5.5f,
+                LeftChildValue = 4.5f,
+                NodeValue = 5f
             };
 
             var node = Setup.CreateStubRotationTree(stubTreeData);
             
             var grandparentNode = node.Grandparent;
+            var nodeLeftChild = node.LeftChild;
             var parent = node.Parent;
             var uncle = node.Uncle;
             
-            var nodeLeftChild = new Node(4.5f);
-            nodeLeftChild.SetParent(node);
-
             grandparentNode.SetRightChild(parent);
             grandparentNode.SetLeftChild(uncle);
             
-            node.SetLeftChild(nodeLeftChild);
             parent.SetLeftChild(node);
 
             _nodeRotator.RightLeftRotation(node);
@@ -148,22 +154,22 @@ namespace RedBlackTreeTests
                 GrandparentValue = 5f,
                 ParentValue = 3f,
                 UncleValue = 6f,
+                
+                RightChildValue = 4.5f,
+                LeftChildValue = 3.5f,
                 NodeValue = 4f,
             };
 
             var node = Setup.CreateStubRotationTree(stubTreeData);
             
             var grandparentNode = node.Grandparent;
+            var nodeRightChild = node.RightChild;
             var parent = node.Parent;
             var uncle = node.Uncle;
             
-            var nodeRightChild = new Node(4.5f);
-            nodeRightChild.SetParent(node);
-
             grandparentNode.SetLeftChild(parent);
             grandparentNode.SetRightChild(uncle);
             
-            node.SetRightChild(nodeRightChild);
             parent.SetRightChild(node);
 
             _nodeRotator.LeftRightRotation(node);

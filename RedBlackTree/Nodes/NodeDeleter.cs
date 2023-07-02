@@ -45,8 +45,8 @@ namespace RedBlackTreeRealisation.Nodes
                 leftSubTree.SetParent(transplantNode);
             }
 
-            /*if (originColor == Color.Black)
-                BalanceAfterDeletion(deleteNode, originRoot);*/
+            if (originColor == Color.Black)
+                BalanceAfterDeletion(deleteNode, originRoot);
         }
 
         private bool AtLeastOneChildIsNull(INode node, out INode childToTransplant)
