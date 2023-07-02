@@ -31,15 +31,15 @@
         public INode LeftLeftRotation(INode node)
         {
             var parent = node.Parent;
-            var grand = node.Grandparent;
+            var grandparent = node.Grandparent;
             var rightParentChild = parent.RightChild;
 
             parent.SwapColor();
-            parent.SetRightChild(grand);
+            parent.SetRightChild(grandparent);
 
-            grand.SwapColor();
-            grand.SetParent(parent);
-            grand.SetLeftChild(rightParentChild);
+            grandparent.SwapColor();
+            grandparent.SetParent(parent);
+            grandparent.SetLeftChild(rightParentChild);
 
             return parent;
         }
@@ -47,29 +47,29 @@
         public INode RightRightRotation(INode node)
         {
             var parent = node.Parent;
-            var grand = node.Grandparent;
+            var grandparent = node.Grandparent;
             var leftParentChild = parent.LeftChild;
 
             parent.SwapColor();
-            parent.SetLeftChild(grand);
+            parent.SetLeftChild(grandparent);
 
-            grand.SwapColor();
-            grand.SetParent(parent);
-            grand.SetRightChild(leftParentChild);
+            grandparent.SwapColor();
+            grandparent.SetParent(parent);
+            grandparent.SetRightChild(leftParentChild);
 
             return parent;
         }
 
         public INode LeftRightRotation(INode node)
         {
-            var leftChild = node.LeftChild;
-            var grand = node.Grandparent;
             var parent = node.Parent;
+            var leftChild = node.LeftChild;
+            var grandparent = node.Grandparent;
 
-            grand.SetLeftChild(node);
+            grandparent.SetLeftChild(node);
 
             node.SetLeftChild(parent);
-            node.SetParent(grand);
+            node.SetParent(grandparent);
 
             parent.SetRightChild(leftChild);
             parent.SetParent(node);
@@ -79,19 +79,50 @@
 
         public INode RightLeftRotation(INode node)
         {
-            var rightChild = node.RightChild;
-            var grand = node.Grandparent;
             var parent = node.Parent;
+            var rightChild = node.RightChild;
+            var grandparent = node.Grandparent;
 
-            grand.SetRightChild(node);
+            grandparent.SetRightChild(node);
 
             node.SetRightChild(parent);
-            node.SetParent(grand);
+            node.SetParent(grandparent);
 
             parent.SetLeftChild(rightChild);
             parent.SetParent(node);
 
             return RightRightRotation(parent);
+        }
+
+        public void LeftDeleteRotation(INode node)
+        {
+            var parent = node.Parent;
+            var grandparent = node.Grandparent;
+            
+            var rightChild = node.RightChild;
+            var leftChildOfRight = rightChild.LeftChild;
+
+            node.SetRightChild(leftChildOfRight);
+            
+            if(parent.IsLeftChildOf(grandparent))
+                grandparent.SetLeftChild(node);
+            else
+                grandparent.SetRightChild(node);
+        }        
+        
+        public void RightDeleteRotation(INode node)
+        {
+            var parent = node.Parent;
+            var rightChild = node.RightChild;
+            var grandparent = node.Grandparent;
+
+            parent.SetLeftChild(rightChild);
+            node.SetRightChild(parent);
+            
+            if(parent.IsLeftChildOf(grandparent))
+                grandparent.SetLeftChild(node);
+            else
+                grandparent.SetRightChild(node);
         }
     }
 }

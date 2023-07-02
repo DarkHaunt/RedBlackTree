@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace RedBlackTreeRealisation.Nodes
 {
     public class NodeDeleter
@@ -18,43 +19,43 @@ namespace RedBlackTreeRealisation.Nodes
         {
             var originColor = deleteNode.Color;
 
-            if (IsOneOrMoreChildrenAreNull(deleteNode, out INode nodeToTransplate))
-                Transplant(deleteNode, nodeToTransplate);
+            if (AtLeastOneChildIsNull(deleteNode, out INode transplantNode))
+                Transplant(deleteNode, transplantNode);
             else
             {
                 var leftSubTree = deleteNode.LeftChild;
-                var righSubTree = deleteNode.RightChild;
+                var rightSubTree = deleteNode.RightChild;
 
-                var minimalInSubTree = righSubTree.GetMinimumOfSubTree();
-                nodeToTransplate = minimalInSubTree;
+                transplantNode = rightSubTree.GetMinimumOfSubTree();
+                originColor = transplantNode.Color;
 
-                if (IsOneOrMoreChildrenAreNull(minimalInSubTree, out INode transplantChild))
-                    Transplant(minimalInSubTree, transplantChild);
+                if (AtLeastOneChildIsNull(transplantNode, out INode transplantChild))
+                    Transplant(transplantNode, transplantChild);
 
-                Transplant(deleteNode, minimalInSubTree);
+                Transplant(deleteNode, transplantNode);
 
-                minimalInSubTree.SetLeftChild(leftSubTree);
+                transplantNode.SetLeftChild(leftSubTree);
 
                 if (!leftSubTree.IsNull)
-                    leftSubTree.SetParent(minimalInSubTree);
+                    leftSubTree.SetParent(transplantNode);
 
-                if (righSubTree != minimalInSubTree)
+                if (rightSubTree != transplantNode)
                 {
-                    minimalInSubTree.SetRightChild(righSubTree);
-                    righSubTree.SetParent(minimalInSubTree);
+                    transplantNode.SetRightChild(rightSubTree);
+                    rightSubTree.SetParent(transplantNode);
                 }
             }
 
             if (originColor == Color.Black)
-                BalanceAfterDelition(nodeToTransplate);
+                BalanceAfterDeletion(deleteNode);
         }
 
-        private bool IsOneOrMoreChildrenAreNull(INode node, out INode childToTransplate)
+        private bool AtLeastOneChildIsNull(INode node, out INode childToTransplant)
         {
             var leftChildIsNull = node.LeftChild.IsNull;
             var rightChildIsNull = node.RightChild.IsNull;
 
-            childToTransplate = leftChildIsNull ? node.RightChild : node.LeftChild;
+            childToTransplant = leftChildIsNull ? node.RightChild : node.LeftChild;
 
             return leftChildIsNull || rightChildIsNull;
         }
@@ -74,69 +75,53 @@ namespace RedBlackTreeRealisation.Nodes
                 transplantNode.SetParent(parent);
         }
 
-        private void BalanceAfterDelition(INode node)
+        private void BalanceAfterDeletion(INode deletionNode)
         {
-            if (node.Color == Color.Red || node == _tree.GetRoot())
-                node.SetColor(Color.Black);
-            else
-                PerformBlackColor();
+            var node = deletionNode;
+            var root = _tree.GetRoot();
+            var sibling = deletionNode.Sibling;
 
-            void PerformBlackColor()
+            while (node != root && node.Color == Color.Black)
             {
-                var subling = node.Sibling;
-                var parent = node.Parent;
-
-                var isSublingLeftChild = subling.IsLeftChildOf(parent);
-
-                if(AreBothOfSiblingChildrenRed(subling))
+                if (sibling.Color == Color.Red)
                 {
-                    if (isSublingLeftChild)
-                        _rotator.LeftLeftRotation(parent);
-                    else
-                        _rotator.RightRightRotation(parent);
+                    sibling.SwapColor();
+                    node.Parent.SetColor(Color.Red);
+                    
+                    _rotator.LeftDeleteRotation(node.Parent);
+                    
+                    sibling = node.Parent.RightChild;
                 }
-                else if (IsOneOfSiblingChildRed(subling, out INode redChild))
-                {
-                    var isRedChildLeft = redChild.IsLeftChildOf(subling); 
 
-                    if(isSublingLeftChild)
-                    {
-                        if (isRedChildLeft)
-                            _rotator.LeftLeftRotation(parent); // TODO: Refactor argument income
-                        else
-                            _rotator.LeftRightRotation(redChild);
-                    }
-                    else
-                    {
-                        if (isRedChildLeft)
-                            _rotator.RightLeftRotation(redChild);
-                        else
-                            _rotator.RightRightRotation(parent);
-                    }
+                if (sibling.LeftChild.Color == Color.Black && sibling.RightChild.Color == Color.Black)
+                {
+                    sibling.SetColor(Color.Red);
+                    node = node.Parent;
                 }
                 else
                 {
+                    if (sibling.RightChild.Color == Color.Black)
+                    {
+                        sibling.LeftChild.SetColor(Color.Black);
+                        sibling.SetColor(Color.Red);
+                        
+                        _rotator.RightDeleteRotation(sibling); // TODO: Method Refactoring
 
+                        sibling = node.Parent.RightChild;
+                    }
+                    
+                    sibling.SetColor(node.Parent.Color);
+                    
+                    node.Parent.SetColor(Color.Black);
+                    sibling.RightChild.SetColor(Color.Black);
+                    
+                    _rotator.LeftDeleteRotation(node.Parent);
+
+                    node = root;
                 }
             }
-
-            bool AreBothOfSiblingChildrenRed(INode subling)
-            {
-                var isRightChildRed = subling.RightChild.Color == Color.Red;
-                var isLeftChildRed = subling.LeftChild.Color == Color.Red;
-
-                return isLeftChildRed && isRightChildRed;
-            }
-
-            bool IsOneOfSiblingChildRed(INode subling, out INode child)
-            {
-                var isRightChildRed = subling.RightChild.Color == Color.Red;
-                var isLeftChildRed = subling.LeftChild.Color == Color.Red;
-
-                child = isRightChildRed ? subling.RightChild : subling.LeftChild;
-
-                return isLeftChildRed || isRightChildRed;
-            }
+            
+            node!.SetColor(Color.Black);
         }
     }
 }
