@@ -72,9 +72,7 @@ namespace RedBlackTreeTests
             
             _tree.DeleteNode(rootValue);
             
-            var root = _tree.GetRoot();
-
-            Assert.AreEqual(root, leftNodeChild);
+            Assert.AreEqual(_tree.Root, leftNodeChild);
         }
     }
 }

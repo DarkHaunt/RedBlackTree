@@ -4,21 +4,21 @@ namespace RedBlackTreeRealisation.Nodes
 {
     public class NodeDeleter
     {
+        public event Action<INode> OnUnparentedNodeTransplanted; 
+
+        
         private readonly NodeRotator _rotator;
-        private readonly RedBlackTree _tree;
 
 
-        public NodeDeleter(RedBlackTree tree, NodeRotator nodeRotator)
+        public NodeDeleter(NodeRotator nodeRotator)
         {
             _rotator = nodeRotator;
-            _tree = tree;
         }
 
 
-        public void DeleteNode(INode deleteNode)
+        public void DeleteNode(INode deleteNode, INode originRoot)
         {
             var originColor = deleteNode.Color;
-            var originRoot = _tree.GetRoot();
 
             if (AtLeastOneChildIsNull(deleteNode, out INode transplantNode))
                 Transplant(deleteNode, transplantNode);
@@ -45,8 +45,8 @@ namespace RedBlackTreeRealisation.Nodes
                 leftSubTree.SetParent(transplantNode);
             }
 
-            if (originColor == Color.Black)
-                BalanceAfterDeletion(deleteNode, originRoot);
+            /*if (originColor == Color.Black)
+                BalanceAfterDeletion(deleteNode, originRoot);*/
         }
 
         private bool AtLeastOneChildIsNull(INode node, out INode childToTransplant)
@@ -64,7 +64,7 @@ namespace RedBlackTreeRealisation.Nodes
             var parent = node.Parent;
 
             if (parent.IsNull)
-                _tree.SetRootNode(transplantNode);
+                OnUnparentedNodeTransplanted?.Invoke(transplantNode);
             else if (node.IsLeftChildOf(parent))
                 parent.SetLeftChild(transplantNode);
             else

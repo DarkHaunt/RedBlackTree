@@ -6,15 +6,15 @@ namespace RedBlackTreeTests.TestsSetup
     public static class Setup
     {
         public static RedBlackTree CreateTree()
-            => new RedBlackTree();          
+            => new ();          
         
-        public static RedBlackTree CreateTree(float value)
-            => new RedBlackTree(value);   
+        public static NodeRotator CreateNodeRotator() 
+            => new();        
         
-        public static NodeRotator CreateNodeRotator()
-            => new NodeRotator();
+        public static NodeDeleter CreateNodeDeleter(NodeRotator nodeRotator)
+            => new (nodeRotator);
 
-        public static INode CreateStubRotationTree(RotationTreeStubData stubData)
+        public static INode CreateStubNodesConstruction(NodeConstructionStubData stubData)
         {
             var grandparentNode = new Node(stubData.GrandparentValue);
             grandparentNode.SetColor(Color.Black);
@@ -43,7 +43,7 @@ namespace RedBlackTreeTests.TestsSetup
         }
     }
 
-    public struct RotationTreeStubData
+    public struct NodeConstructionStubData
     {
         public float GrandparentValue;
         public float ParentValue;

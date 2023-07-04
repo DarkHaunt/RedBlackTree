@@ -1,6 +1,8 @@
-﻿using RedBlackTreeRealisation.Nullables;
+﻿using RedBlackTreeRealisation.Extensions;
+using RedBlackTreeRealisation.Nullables;
 using RedBlackTreeRealisation.Nodes;
 using System;
+
 
 namespace RedBlackTreeRealisation
 {
@@ -8,56 +10,49 @@ namespace RedBlackTreeRealisation
     {
         private readonly NodeRotator _rotator;
         private readonly NodeDeleter _deleter;
-        
-        private INode _root;
+
+        public INode Root { get; private set; }
 
 
         public RedBlackTree()
         {
-            _root = NullableContainer.NullNode;
+            Root = NullableContainer.NullNode;
 
             _rotator = new NodeRotator();
-            _deleter = new NodeDeleter(this, _rotator);
+            _deleter = new NodeDeleter(_rotator);
+            
+            _deleter.OnUnparentedNodeTransplanted += SetRoot;
         }
 
-        public RedBlackTree(float value)
+        ~RedBlackTree()
         {
-            CreateRootNode(value);
-
-            _rotator = new NodeRotator();
-            _deleter = new NodeDeleter(this, _rotator);
+            _deleter.OnUnparentedNodeTransplanted -= SetRoot;
         }
-
-
-        public void SetRootNode(INode root)
-            => _root = root;
-
-        public INode GetRoot()
-            => _root;
+        
 
         public void Insert(float value)
         {
-            if (_root.IsNull)
+            if (Root.IsNull)
             {
                 CreateRootNode(value);
                 return;
             }
 
-            TryToInsertValueInto(_root, value);
+            TryToInsertValueInto(Root, value);
         }
 
         public INode Find(float value)
         {
-            return FindValue(_root);
+            return FindRecursive(Root);
 
-            INode FindValue(INode node)
+            INode FindRecursive(INode node)
             {
                 if (node.Value == value || node.IsNull) // TODO: Write properly float comparer or get from internet
                     return node;
 
                 var nextNode = value > node.Value ? node.RightChild : node.LeftChild;
 
-                return FindValue(nextNode);
+                return FindRecursive(nextNode);
             }
         }
 
@@ -68,7 +63,7 @@ namespace RedBlackTreeRealisation
             if (node.IsNull)
                 return;
 
-            _deleter.DeleteNode(node);
+            _deleter.DeleteNode(node, Root);
         }
 
         private void TryToInsertValueInto(INode root, float currentValue)
@@ -99,7 +94,7 @@ namespace RedBlackTreeRealisation
         {
             var parent = insertedNode.Parent;
 
-            if (parent.Color == Color.Black || insertedNode == _root)
+            if (parent.Color == Color.Black || insertedNode == Root)
                 return;
 
             var grandparent = insertedNode.Grandparent;
@@ -122,36 +117,41 @@ namespace RedBlackTreeRealisation
                 uncle.SetColor(Color.Black);
                 parent.SetColor(Color.Black);
 
-                if (grandparent != _root)
+                if (grandparent != Root)
                     grandparent.SetColor(Color.Red);
 
                 BalanceAfterInsertion(grandparent);
             }
 
             void HandleBlackInsertConflict()
-            {
+            { 
                 var localRoot = _rotator.RotateLocalTree(insertedNode);
 
-                if (grandparent == _root)
-                    _root = localRoot;
+                if (grandparent == Root)
+                    SetRoot(localRoot);
                 
                 BalanceAfterInsertion(localRoot);
             }
         }
 
+        private void SetRoot(INode root)
+        {
+            Root = root;
+        }
+        
         private void CreateRootNode(float value)
         {
-            SetRootNode(new Node(value));
-
-            _root.SetColor(Color.Black);
+            var root = new Node(value)
+                .With(node => node.SetColor(Color.Black));
+            
+            SetRoot(root);
         }
-
-
+        
         #region [Printing]
 
         public void PrintTree()
         {
-            PrintNode(_root);
+            PrintNode(Root);
         }
 
         private void PrintNode(INode node)

@@ -6,8 +6,9 @@ namespace RedBlackTreeRealisation
     {
         static void Main(string[] args)
         {
-            var tree = new RedBlackTree(8f);
+            var tree = new RedBlackTree();
             
+            tree.Insert(8f);
             tree.Insert(5f);
             tree.Insert(15f);
             tree.Insert(12f);

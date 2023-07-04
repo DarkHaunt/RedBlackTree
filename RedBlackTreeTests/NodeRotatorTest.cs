@@ -20,7 +20,7 @@ namespace RedBlackTreeTests
         [TestMethod]
         public void Right_Right_Rotation_Case()
         {
-            var stubTreeData = new RotationTreeStubData
+            var stubTreeData = new NodeConstructionStubData
             {
                 GrandparentValue = 2f,
                 ParentValue = 3f,
@@ -31,7 +31,7 @@ namespace RedBlackTreeTests
                 NodeValue = 4f
             };
 
-            var node = Setup.CreateStubRotationTree(stubTreeData);
+            var node = Setup.CreateStubNodesConstruction(stubTreeData);
             
             var grandparentNode = node.Grandparent;
             var parent = node.Parent;
@@ -64,7 +64,7 @@ namespace RedBlackTreeTests
         [TestMethod]
         public void Left_Left_Rotation_Case()
         {
-            var stubTreeData = new RotationTreeStubData
+            var stubTreeData = new NodeConstructionStubData
             {
                 GrandparentValue = 3f,
                 ParentValue = 2f,
@@ -75,7 +75,7 @@ namespace RedBlackTreeTests
                 NodeValue = 1f
             };
 
-            var node = Setup.CreateStubRotationTree(stubTreeData);
+            var node = Setup.CreateStubNodesConstruction(stubTreeData);
             
             var grandparentNode = node.Grandparent;
             var parent = node.Parent;
@@ -108,7 +108,7 @@ namespace RedBlackTreeTests
         [TestMethod]
         public void Right_Left_Rotation_Case()
         {
-            var stubTreeData = new RotationTreeStubData
+            var stubTreeData = new NodeConstructionStubData
             {
                 GrandparentValue = 4f,
                 ParentValue = 6f,
@@ -119,7 +119,7 @@ namespace RedBlackTreeTests
                 NodeValue = 5f
             };
 
-            var node = Setup.CreateStubRotationTree(stubTreeData);
+            var node = Setup.CreateStubNodesConstruction(stubTreeData);
             
             var grandparentNode = node.Grandparent;
             var nodeLeftChild = node.LeftChild;
@@ -149,7 +149,7 @@ namespace RedBlackTreeTests
         [TestMethod]
         public void Left_Right_Rotation_Case()
         {
-            var stubTreeData = new RotationTreeStubData
+            var stubTreeData = new NodeConstructionStubData
             {
                 GrandparentValue = 5f,
                 ParentValue = 3f,
@@ -160,7 +160,7 @@ namespace RedBlackTreeTests
                 NodeValue = 4f,
             };
 
-            var node = Setup.CreateStubRotationTree(stubTreeData);
+            var node = Setup.CreateStubNodesConstruction(stubTreeData);
             
             var grandparentNode = node.Grandparent;
             var nodeRightChild = node.RightChild;
