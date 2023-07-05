@@ -26,13 +26,14 @@ namespace RedBlackTreeTests
             {
                 NodeValue = 2f,
                 LeftChildValue = 1f,
+                RightChildValue = 3f,
             };
             
             var nodeConstruct = Setup.CreateStubNodesConstruction(nodeConstructData);
             
             _nodeDeleter.DeleteNode(nodeConstruct.LeftChild, nodeConstruct);
 
-            Assert.AreEqual(nodeConstruct.LeftChild, NullableContainer.NullNode);
-        }
+            Assert.IsTrue(nodeConstruct.LeftChild.IsNull);
+        }        
     }
 }

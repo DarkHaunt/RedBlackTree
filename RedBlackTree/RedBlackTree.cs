@@ -1,7 +1,7 @@
 ﻿using RedBlackTreeRealisation.Extensions;
-using RedBlackTreeRealisation.Nullables;
 using RedBlackTreeRealisation.Nodes;
 using System;
+using RedBlackTreeRealisation.Nullables;
 
 
 namespace RedBlackTreeRealisation
@@ -16,7 +16,7 @@ namespace RedBlackTreeRealisation
 
         public RedBlackTree()
         {
-            Root = NullableContainer.NullNode;
+            Root = NullNode.Create();
 
             _rotator = new NodeRotator();
             _deleter = new NodeDeleter(_rotator);

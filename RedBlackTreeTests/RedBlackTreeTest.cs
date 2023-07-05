@@ -74,5 +74,7 @@ namespace RedBlackTreeTests
             
             Assert.AreEqual(_tree.Root, leftNodeChild);
         }
+        
+        
     }
 }

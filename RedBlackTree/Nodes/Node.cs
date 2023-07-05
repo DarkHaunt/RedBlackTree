@@ -48,38 +48,25 @@ namespace RedBlackTreeRealisation.Nodes
         }
 
 
-        public Node(float value)
+        public Node(float value) 
         {
             Value = value;
             Color = Color.Red;
-            LeftChild = Parent = RightChild = NullableContainer.NullNode;
+            LeftChild = Parent = RightChild = NullNode.Create();
         }
 
         
+        public INode GetMinimumOfSubTree()
+            => !LeftChild.IsNull ? LeftChild.GetMinimumOfSubTree() : this;
+        
         public void SwapColor()
-        {
-            Color = (Color == Color.Black) ? Color.Red : Color.Black;
-        }
+            => Color = (Color == Color.Black) ? Color.Red : Color.Black;
 
         public void SetColor(Color color)
-        {
-            Color = color;
-        }
-
-        public INode GetMinimumOfSubTree()
-        {
-            INode minimal = this;
-
-            while (!minimal.LeftChild.IsNull)
-                minimal = minimal.LeftChild;
-
-            return minimal;
-        }
+            => Color = color;
 
         public void SetParent(INode node)
-        {
-            Parent = node;
-        }
+            => Parent = node;
 
         public void SetLeftChild(INode node)
         {
@@ -98,14 +85,10 @@ namespace RedBlackTreeRealisation.Nodes
         }
 
         public bool IsLeftChildOf(INode node)
-        {
-            return node.LeftChild == this;
-        }
+             => node.LeftChild == this;
 
         public bool IsRightChildOf(INode node)
-        {
-            return node.RightChild == this;
-        }
+            => node.RightChild == this;
 
 
         #region [Printing]

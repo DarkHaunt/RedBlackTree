@@ -22,7 +22,7 @@ namespace RedBlackTreeRealisation
 
             Console.WriteLine("---------\n\n");
             
-            tree.DeleteNode(19f);
+            tree.DeleteNode(12f);
             tree.PrintTree();
 
             Console.ReadLine();
