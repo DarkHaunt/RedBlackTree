@@ -1,7 +1,7 @@
 ﻿using RedBlackTreeRealisation.Extensions;
+using RedBlackTreeRealisation.Nullables;
 using RedBlackTreeRealisation.Nodes;
 using System;
-using RedBlackTreeRealisation.Nullables;
 
 
 namespace RedBlackTreeRealisation
@@ -22,11 +22,13 @@ namespace RedBlackTreeRealisation
             _deleter = new NodeDeleter(_rotator);
             
             _deleter.OnUnparentedNodeTransplanted += SetRoot;
+            _rotator.OnRotationNodeParentNull += SetRoot;
         }
 
         ~RedBlackTree()
         {
             _deleter.OnUnparentedNodeTransplanted -= SetRoot;
+            _rotator.OnRotationNodeParentNull -= SetRoot;
         }
         
 

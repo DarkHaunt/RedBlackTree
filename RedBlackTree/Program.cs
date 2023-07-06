@@ -19,7 +19,7 @@ namespace RedBlackTreeRealisation
             tree.Insert(10f);
             
             tree.PrintTree();
-
+            
             Console.WriteLine("---------\n\n");
             
             tree.DeleteNode(12f);

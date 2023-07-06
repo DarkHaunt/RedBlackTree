@@ -43,6 +43,8 @@ namespace RedBlackTreeRealisation.Nodes
 
                 transplantNode.SetLeftChild(leftSubTree);
                 leftSubTree.SetParent(transplantNode);
+
+                transplantNode = rightChildOfTransplant;
             }
 
             if (originColor == Color.Black)
@@ -70,8 +72,7 @@ namespace RedBlackTreeRealisation.Nodes
             else
                 parent.SetRightChild(transplantNode);
 
-            if (!transplantNode.IsNull)
-                transplantNode.SetParent(parent);
+            transplantNode.SetParent(parent);
         }
 
         private void BalanceAfterDeletion(INode transplantNode, INode originRoot)
@@ -108,22 +109,46 @@ namespace RedBlackTreeRealisation.Nodes
                 }
                 else
                 {
-                    if (sibling.RightChild.Color == Color.Black)
+                    var parent = node.Parent;
+
+                    if (sibling.IsRightChildOf(parent))
                     {
-                        sibling.LeftChild.SetColor(Color.Black);
-                        sibling.SetColor(Color.Red);
+                        if (sibling.RightChild.Color == Color.Black)
+                        {
+                            sibling.LeftChild.SetColor(Color.Black);
+                            sibling.SetColor(Color.Red);
 
-                        _rotator.RightDeleteRotation(sibling);
+                            _rotator.RightDeleteRotation(sibling);
 
-                        sibling = node.Parent.RightChild;
+                            sibling = node.Parent.RightChild;
+                        }
+
+                        sibling.SetColor(node.Parent.Color);
+
+                        node.Parent.SetColor(Color.Black);
+                        sibling.RightChild.SetColor(Color.Black);
+
+                        _rotator.LeftDeleteRotation(node.Parent);
                     }
+                    else
+                    {
+                        if (sibling.RightChild.Color == Color.Black)
+                        {
+                            sibling.RightChild.SetColor(Color.Black);
+                            sibling.SetColor(Color.Red);
 
-                    sibling.SetColor(node.Parent.Color);
+                            _rotator.LeftDeleteRotation(sibling);
 
-                    node.Parent.SetColor(Color.Black);
-                    sibling.RightChild.SetColor(Color.Black);
+                            sibling = node.Parent.RightChild;
+                        }
 
-                    _rotator.LeftDeleteRotation(node.Parent);
+                        sibling.SetColor(node.Parent.Color);
+
+                        node.Parent.SetColor(Color.Black);
+                        sibling.RightChild.SetColor(Color.Black);
+
+                        _rotator.RightDeleteRotation(node.Parent);
+                    }
 
                     node = originRoot;
                 }

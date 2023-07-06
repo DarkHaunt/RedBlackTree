@@ -1,7 +1,11 @@
-﻿namespace RedBlackTreeRealisation.Nodes
+﻿using System;
+
+namespace RedBlackTreeRealisation.Nodes
 {
     public class NodeRotator
     {
+        public event Action<INode> OnRotationNodeParentNull;
+        
         public INode RotateLocalTree(INode node)
         {
             var parent = node.Parent;
@@ -71,9 +75,8 @@
             node.SetLeftChild(parent);
             node.SetParent(grandparent);
 
-            if (!leftChild.IsNull)
-                leftChild.SetParent(parent);
-
+            leftChild.SetParent(parent);
+    
             parent.SetRightChild(leftChild);
             parent.SetParent(node);
 
@@ -91,8 +94,7 @@
             node.SetRightChild(parent);
             node.SetParent(grandparent);
 
-            if (!rightChild.IsNull)
-                rightChild.SetParent(parent);
+            rightChild.SetParent(parent);
 
             parent.SetLeftChild(rightChild);
             parent.SetParent(node);
@@ -103,32 +105,49 @@
         public void LeftDeleteRotation(INode node)
         {
             var parent = node.Parent;
-            var grandparent = node.Grandparent;
-
             var rightChild = node.RightChild;
-            var leftChildOfRight = rightChild.LeftChild;
-
-            node.SetRightChild(leftChildOfRight);
-
-            if (parent.IsLeftChildOf(grandparent))
-                grandparent.SetLeftChild(node);
+            var leftOfRightChild = rightChild.LeftChild;
+            
+            node.SetRightChild(leftOfRightChild);
+            
+            if(!leftOfRightChild.IsNull)
+                leftOfRightChild.SetParent(node);
+            
+            rightChild.SetParent(parent);
+            
+            if(parent.IsNull)
+                OnRotationNodeParentNull?.Invoke(rightChild);
+            else if(node.IsLeftChildOf(parent))
+                parent.SetLeftChild(rightChild);
             else
-                grandparent.SetRightChild(node);
+                parent.SetRightChild(rightChild);
+            
+            rightChild.SetLeftChild(node);
+            node.SetParent(rightChild);
         }
 
         public void RightDeleteRotation(INode node)
         {
             var parent = node.Parent;
-            var rightChild = node.RightChild;
-            var grandparent = node.Grandparent;
-
-            parent.SetLeftChild(rightChild);
-            node.SetRightChild(parent);
-
-            if (parent.IsLeftChildOf(grandparent))
-                grandparent.SetLeftChild(node);
+            var leftChild = node.LeftChild;
+            var rightOfLeftChild = leftChild.RightChild;
+            
+            node.SetLeftChild(rightOfLeftChild);
+            
+            if(!rightOfLeftChild.IsNull)
+                rightOfLeftChild.SetParent(node);
+            
+            leftChild.SetParent(parent);
+            
+            if(parent.IsNull)
+                OnRotationNodeParentNull?.Invoke(leftChild);
+            else if(node.IsRightChildOf(parent))
+                parent.SetLeftChild(leftChild);
             else
-                grandparent.SetRightChild(node);
+                parent.SetRightChild(leftChild);
+            
+            leftChild.SetRightChild(node);
+            node.SetParent(leftChild);
         }
     }
 }
