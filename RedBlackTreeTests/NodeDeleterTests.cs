@@ -33,6 +33,6 @@ namespace RedBlackTreeTests
             _nodeDeleter.DeleteNode(nodeConstruct.LeftChild, nodeConstruct);
 
             Assert.IsTrue(nodeConstruct.LeftChild.IsNull);
-        }        
+        }
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RedBlackTreeTests.TestsSetup;
 using RedBlackTreeRealisation;
+using RedBlackTreeRealisation.Nodes;
 
 
 namespace RedBlackTreeTests
@@ -74,7 +75,43 @@ namespace RedBlackTreeTests
             
             Assert.AreEqual(_tree.Root, leftNodeChild);
         }
+
+        [TestMethod]
+        public void Delete_Root_Node_With_RightChild_Without_LeftChild_Make_RightChild_Be_Root()
+        {
+            var rootValue = 2f;
+            var leftChildValue = 1f;
+            var rightChildValue = 3f;
+
+            _tree.Insert(rootValue);
+            _tree.Insert(leftChildValue);
+            _tree.Insert(rightChildValue);
+
+            var rightChild = _tree.Find(rightChildValue);
+
+            _tree.DeleteNode(rootValue);
+
+            Assert.AreEqual(_tree.Root, rightChild);
+        }        
         
-        
+        [TestMethod]
+        public void Delete_Root_Node_With_RightChild_With_LeftChild_Make_RightChild_LeftChild_Be_Root()
+        {
+            var rootValue = 2f;
+            var leftChildValue = 1f;
+            var rightChildValue = 4f;
+            var rightChildLeftChildValue = 3f;
+
+            _tree.Insert(rootValue);
+            _tree.Insert(leftChildValue);
+            _tree.Insert(rightChildValue);
+            _tree.Insert(rightChildLeftChildValue);
+
+            var rightChildLeftChild = _tree.Find(rightChildLeftChildValue);
+
+            _tree.DeleteNode(rootValue);
+
+            Assert.AreEqual(_tree.Root, rightChildLeftChild);
+        }
     }
 }
