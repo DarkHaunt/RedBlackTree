@@ -8,6 +8,8 @@ namespace RedBlackTreeRealisation
 {
     public class RedBlackTree
     {
+        private const float Epsilon = 0.0001f;
+        
         private readonly NodeRotator _rotator;
         private readonly NodeDeleter _deleter;
 
@@ -49,7 +51,7 @@ namespace RedBlackTreeRealisation
 
             INode FindRecursive(INode node)
             {
-                if (node.Value == value || node.IsNull) // TODO: Write properly float comparer or get from internet
+                if (IsNodeHasValue(node, value) || node.IsNull)
                     return node;
 
                 var nextNode = value > node.Value ? node.RightChild : node.LeftChild;
@@ -86,9 +88,9 @@ namespace RedBlackTreeRealisation
                 BalanceAfterInsertion(targetNode);
             }
 
-            if (targetNode.Value == currentValue)
+            if (IsNodeHasValue(targetNode, currentValue))
                 return;
-
+            
             TryToInsertValueInto(targetNode, currentValue);
         }
 
@@ -96,7 +98,7 @@ namespace RedBlackTreeRealisation
         {
             var parent = insertedNode.Parent;
 
-            if (parent.Color == Color.Black || insertedNode == Root)
+            if (parent.Color == Color.Black || insertedNode.Equals(Root))
                 return;
 
             var grandparent = insertedNode.Grandparent;
@@ -119,7 +121,7 @@ namespace RedBlackTreeRealisation
                 uncle.SetColor(Color.Black);
                 parent.SetColor(Color.Black);
 
-                if (grandparent != Root)
+                if (!grandparent.Equals(Root))
                     grandparent.SetColor(Color.Red);
 
                 BalanceAfterInsertion(grandparent);
@@ -129,7 +131,7 @@ namespace RedBlackTreeRealisation
             { 
                 var localRoot = _rotator.RotateLocalTree(insertedNode);
 
-                if (grandparent == Root)
+                if (grandparent.Equals(Root))
                     SetRoot(localRoot);
                 
                 BalanceAfterInsertion(localRoot);
@@ -147,6 +149,11 @@ namespace RedBlackTreeRealisation
                 .With(node => node.SetColor(Color.Black));
             
             SetRoot(root);
+        }
+
+        private bool IsNodeHasValue(INode node, float value)
+        {
+            return MathF.Abs(node.Value - value) < Epsilon;
         }
         
         #region [Printing]

@@ -60,10 +60,10 @@ namespace RedBlackTreeRealisation.Nullables
             => throw NullNodeException.Create();
 
         public bool IsRightChildOf(INode node)
-            => node.RightChild == this;
+            => node.RightChild.Equals(this);
         
         public bool IsLeftChildOf(INode node)
-            => node.LeftChild == this;
+            => node.LeftChild.Equals(this);
 
         public void SetParent(INode node)
             => Parent = node;

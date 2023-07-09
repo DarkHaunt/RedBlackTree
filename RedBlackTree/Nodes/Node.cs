@@ -85,10 +85,10 @@ namespace RedBlackTreeRealisation.Nodes
         }
 
         public bool IsLeftChildOf(INode node)
-             => node.LeftChild == this;
+             => node.LeftChild.Equals(this);
 
         public bool IsRightChildOf(INode node)
-            => node.RightChild == this;
+            => node.RightChild.Equals(this);
 
 
         #region [Printing]
@@ -110,16 +110,9 @@ namespace RedBlackTreeRealisation.Nodes
         #endregion
 
         #region [Comparing Override]
-        public static bool operator ==(Node a, Node b) => a.Value == b.Value;
-        public static bool operator !=(Node a, Node b) => a.Value != b.Value;
-
         private bool Equals(Node other)
         {
-            return Value.Equals(other.Value) &&
-                   Color == other.Color &&
-                   Equals(Parent, other.Parent) &&
-                   Equals(RightChild, other.RightChild) &&
-                   Equals(LeftChild, other.LeftChild);
+            return Value.Equals(other.Value);
         }
 
         public override bool Equals(object obj)
