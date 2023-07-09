@@ -39,6 +39,11 @@ namespace RedBlackTreeTests.TestsSetup
             node.SetRightChild(rightChild);
             node.SetLeftChild(leftChild);
             
+            if(node.Value > parent.Value)
+                parent.SetRightChild(node);
+            else
+                parent.SetLeftChild(node);
+            
             return node;
         }
     }

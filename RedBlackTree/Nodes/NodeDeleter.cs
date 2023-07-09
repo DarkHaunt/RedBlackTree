@@ -115,12 +115,12 @@ namespace RedBlackTreeRealisation.Nodes
 
             if (sibling.IsRightChildOf(parent))
             {
-                _rotator.LeftDeleteRotation(parent);
+                _rotator.LeftRotation(parent);
                 nextNodeToProcess = parent.RightChild;
             }
             else
             {
-                _rotator.RightDeleteRotation(parent);
+                _rotator.RightRotation(parent);
                 nextNodeToProcess = parent.LeftChild;
             }
 
@@ -139,12 +139,12 @@ namespace RedBlackTreeRealisation.Nodes
                     siblingLeftChild.SetColor(Color.Black);
                     sibling.SetColor(Color.Red);
 
-                    _rotator.RightDeleteRotation(sibling);
+                    _rotator.RightRotation(sibling);
 
                     sibling = parent.RightChild;
                 }
 
-                _rotator.LeftDeleteRotation(parent);
+                _rotator.LeftRotation(parent);
                 
                 siblingRightChild.SetColor(Color.Black);
             }
@@ -155,12 +155,12 @@ namespace RedBlackTreeRealisation.Nodes
                     siblingRightChild.SetColor(Color.Black);
                     sibling.SetColor(Color.Red);
 
-                    _rotator.LeftDeleteRotation(sibling);
+                    _rotator.LeftRotation(sibling);
 
                     sibling = parent.LeftChild;
                 }
 
-                _rotator.RightDeleteRotation(parent);
+                _rotator.RightRotation(parent);
                 
                 siblingLeftChild.SetColor(Color.Black);
             }

@@ -9,7 +9,7 @@ namespace RedBlackTreeRealisation
     public class RedBlackTree
     {
         private const float Epsilon = 0.0001f;
-        
+
         private readonly NodeRotator _rotator;
         private readonly NodeDeleter _deleter;
 
@@ -22,7 +22,7 @@ namespace RedBlackTreeRealisation
 
             _rotator = new NodeRotator();
             _deleter = new NodeDeleter(_rotator);
-            
+
             _deleter.OnUnparentedNodeTransplanted += SetRoot;
             _rotator.OnRotationNodeParentNull += SetRoot;
         }
@@ -32,7 +32,7 @@ namespace RedBlackTreeRealisation
             _deleter.OnUnparentedNodeTransplanted -= SetRoot;
             _rotator.OnRotationNodeParentNull -= SetRoot;
         }
-        
+
 
         public void Insert(float value)
         {
@@ -90,7 +90,7 @@ namespace RedBlackTreeRealisation
 
             if (IsNodeHasValue(targetNode, currentValue))
                 return;
-            
+
             TryToInsertValueInto(targetNode, currentValue);
         }
 
@@ -128,13 +128,35 @@ namespace RedBlackTreeRealisation
             }
 
             void HandleBlackInsertConflict()
-            { 
-                var localRoot = _rotator.RotateLocalTree(insertedNode);
+            {
+                if (uncle.IsLeftChildOf(grandparent))
+                {
+                    if (insertedNode.IsLeftChildOf(parent))
+                    {
+                        insertedNode = parent;
+                        _rotator.RightRotation(insertedNode);
+                    }
+                    
+                    insertedNode.Parent.SetColor(Color.Black);
+                    insertedNode.Grandparent.SetColor(Color.Red);       
 
-                if (grandparent.Equals(Root))
-                    SetRoot(localRoot);
-                
-                BalanceAfterInsertion(localRoot);
+                    _rotator.LeftRotation(insertedNode.Grandparent);
+                }
+                else
+                {
+                    if (insertedNode.IsRightChildOf(parent))
+                    {
+                        insertedNode = parent;
+                        _rotator.LeftRotation(insertedNode);
+                    }
+                    
+                    insertedNode.Parent.SetColor(Color.Black);
+                    insertedNode.Grandparent.SetColor(Color.Red);
+                    
+                    _rotator.RightRotation(insertedNode.Grandparent);
+                }
+
+                BalanceAfterInsertion(insertedNode);
             }
         }
 
@@ -142,12 +164,12 @@ namespace RedBlackTreeRealisation
         {
             Root = root;
         }
-        
+
         private void CreateRootNode(float value)
         {
             var root = new Node(value)
                 .With(node => node.SetColor(Color.Black));
-            
+
             SetRoot(root);
         }
 
@@ -155,7 +177,7 @@ namespace RedBlackTreeRealisation
         {
             return MathF.Abs(node.Value - value) < Epsilon;
         }
-        
+
         #region [Printing]
 
         public void PrintTree()
