@@ -85,14 +85,14 @@ namespace RedBlackTreeRealisation.Nodes
             var parent = node.Parent;
 
             if (sibling.Color == Color.Red)
-                sibling = MaintainRedSublingColor(sibling, parent);
+                sibling = MaintainRedSiblingColor(sibling, parent);
 
             var siblingRightChild = sibling.RightChild;
             var siblingLeftChild = sibling.LeftChild;
 
             if (siblingLeftChild.Color == Color.Black 
                 && siblingRightChild.Color == Color.Black)
-                node = MaintainSubingsChildrenBlack(sibling);
+                node = MaintainSiblingsChildrenBlack(sibling);
             else
             {
                 if (sibling.IsRightChildOf(parent))
@@ -111,14 +111,14 @@ namespace RedBlackTreeRealisation.Nodes
                 }
                 else
                 {
-                    if (sibling.RightChild.Color == Color.Black)
+                    if (sibling.LeftChild.Color == Color.Black)
                     {
                         sibling.RightChild.SetColor(Color.Black);
                         sibling.SetColor(Color.Red);
 
                         _rotator.LeftDeleteRotation(sibling);
 
-                        sibling = parent.RightChild;
+                        sibling = parent.LeftChild;
                     }
 
                     _rotator.RightDeleteRotation(parent);
@@ -137,7 +137,7 @@ namespace RedBlackTreeRealisation.Nodes
             node!.SetColor(Color.Black);
         }
 
-        private INode MaintainRedSublingColor(INode sibling, INode parent)
+        private INode MaintainRedSiblingColor(INode sibling, INode parent)
         {
             sibling.SwapColor();
             parent.SetColor(Color.Red);
@@ -158,7 +158,7 @@ namespace RedBlackTreeRealisation.Nodes
             return nextNodeToProcess;
         }
 
-        private INode MaintainSubingsChildrenBlack(INode sibling)
+        private INode MaintainSiblingsChildrenBlack(INode sibling)
         {
             sibling.SetColor(Color.Red);
 
